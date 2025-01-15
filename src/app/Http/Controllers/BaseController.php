@@ -10,23 +10,34 @@ class BaseController extends Controller
 {
     protected function handleRedirects(Request $request)
     {
+        //勤怠
+        if ($request->has('attendance')) {
+            return redirect()->route('attendance.show');
+        }
+
+
+        //勤怠一覧
+        if ($request->has('attendance-list')) {
+            return redirect()->route('attendance_list');
+        }
+
+        //申請
+        if ($request->has('request')) {
+            return redirect()->route('correctionrequest');
+        }
+
         if ($request->has('logout')) {
             Auth::logout();
             return redirect()->route('attendance.show');
         }
 
-        if ($request->has('login') ) {
+        if ($request->has('login')) {
             return redirect()->route('login.show');
         }
 
-        if ($request->has('mypage')) {
-            return redirect('mypage');
-        }
 
-        if ($request->has('sell')) {
-            return redirect()->route('sell');
-        }
 
-        return null; // リダイレクト不要の場合
+        // デフォルトのリダイレクト先を指定
+    return null; // リダイレクト不要の場合
     }
 }

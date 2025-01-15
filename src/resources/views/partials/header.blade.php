@@ -1,5 +1,5 @@
 <div class="form">
-    <form action="/" method="post">
+    <form action="{{ route('attendance.show') }}" method="post">
         @csrf
         <input class="form_item" type="submit" value="勤怠" name="attendance">
         <input class="form_item" type="submit" value="勤怠一覧" name="attendance-list">

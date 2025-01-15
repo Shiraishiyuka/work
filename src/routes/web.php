@@ -19,10 +19,6 @@ use App\Http\Controllers\AttendanceDetailController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.show');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
@@ -30,7 +26,7 @@ Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 
-Route::get('/attendance', [AttendanceController::class, 'show'])->name('attendance.show');
+Route::match(['get', 'post'], '/attendance', [AttendanceController::class, 'show'])->name('attendance.show');
 Route::post('/attendance/start', [AttendanceController::class, 'startWork'])->name('attendance.startWork');
 Route::post('/attendance/break', [AttendanceController::class, 'takeBreak'])->name('attendance.takeBreak');
 Route::post('/attendance/break/end', [AttendanceController::class, 'endBreak'])->name('attendance.endBreak');
@@ -41,4 +37,4 @@ Route::get('/attendance_list', [AttendanceListController::class, 'attendance_lis
 
 Route::get('/correctionrequest', [CorrectionRequestController::class, 'correctionrequest'])->name('correctionrequest');
 
-Route::get('/attendancedetail', [AttendanceDetailController::class, 'attendancedetail'])->name('attendancedetail');
+Route::get('/attendancedetail/{id}', [AttendanceDetailController::class, 'attendancedetail'])->name('attendancedetail');

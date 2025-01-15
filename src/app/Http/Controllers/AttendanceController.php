@@ -4,16 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Http\Controllers\BaseController;
+use Illuminate\Support\Facades\Auth; // Auth ファサードを正しくインポート
+use App\Models\User;
 
-class AttendanceController extends Controller
+class AttendanceController extends BaseController
 {
-   public function show()
+   public function show(Request $request)
 {
-    
+    // Carbon のロケールを日本語に設定
+    \Carbon\Carbon::setLocale('ja');
+
+
+    // リダイレクト処理を呼び出し
+    $redirect = $this->handleRedirects($request);
+    if ($redirect) {
+        return $redirect;
+    }
+
     // セッションに初期値を設定（存在しない場合のみ）
     if (!session()->has('attendance_status')) {
         session(['attendance_status' => 'not_working']);
     }
+
 
     // 現在の時刻を取得
     $currentDateTime = Carbon::now();

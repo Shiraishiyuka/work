@@ -93,9 +93,25 @@
 .word-processing_text {
             font-size: 32px;
             font-weight: 700;
+            background-color: #000;
+                /* 背景色を黒に設定 */
             color: #FFFFFF;
             /* 白文字を設定 */
             text-align: center;
+}
+
+
+button {
+    border: none;
+    /* 枠線を削除 */
+    background: none;
+    /* 背景を削除 */
+    padding: 0;
+    /* 余白を削除 */
+    margin: 0;
+    /* マージンを削除 */
+    outline: none;
+    /* フォーカス時の青い枠を削除 */
 }
 
 

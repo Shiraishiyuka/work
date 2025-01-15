@@ -45,14 +45,16 @@
                     <th>合計</th>
                     <th>詳細</th>
                 </tr>
+                @foreach ($attendances as $attendance)
                 <tr>
-                    <td>日付</td>
-                    <td>出勤時間</td>
-                    <td>退勤時間</td>
-                    <td>休憩合計時間</td>
-                    <td>退勤合計時間</td>
-                    <td>詳細</td>
+                    <td>{{ $attendance->date }}</td>
+                    <td>{{ $attendance->start_time }}</td>
+                    <td>{{ $attendance->end_time ?? '-' }}</td>
+                    <td>{{ floor($attendance->break_minutes / 60) }}時間{{ $attendance->break_minutes % 60 }}分</td>
+                    <td>{{ floor($attendance->work_minutes / 60) }}時間{{ $attendance->work_minutes % 60 }}分</td>
+                    <td><a href="{{ route('attendancedetail', ['id' => $attendance->id]) }}">詳細</a></td>
                 </tr>
+                @endforeach
             </table>
         </div>
         

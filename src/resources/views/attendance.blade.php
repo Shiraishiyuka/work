@@ -28,7 +28,7 @@
         
         <!-- 現在の日付を表示 -->
         <div class="word-date">
-            <div class="word-date_text">{{ $currentDateTime->format('Y年m月d日（D）') }}</div>
+            <div class="word-date_text">{{ $currentDateTime->formatLocalized('%Y年%m月%d日（%a）') }}</div>
         </div>
         
         <!-- 現在の時刻を表示 -->
