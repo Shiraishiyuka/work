@@ -1,0 +1,111 @@
+/* ベーススタイル */
+.login_form {
+    width: 40%;
+    margin: 0 auto;
+    padding-top: 8vh;
+}
+
+.login-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.login-content {
+    margin-top: 5vh;
+}
+
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+
+/* ラベル */
+label {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* 入力欄 */
+.text {
+    width: 100%;
+    height: 2.2rem;
+    font-size: 0.8125rem;
+    border: 1px solid rgb(113, 105, 105);
+    border-radius: 0.1875rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+/* エラーメッセージ */
+.form_error {
+    font-size: 0.75rem;
+    color: #ff0000;
+    margin-top: 0.25rem;
+}
+
+/* ボタン */
+.button {
+    margin-top: 4rem;
+}
+
+.button-submit {
+    width: 100%;
+    height: 3rem;
+    font-size: 1.3rem;
+    background-color: #FF5555;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 0.1875rem;
+    cursor: pointer;
+}
+
+/* 戻るボタン */
+.return_button {
+    text-align: center;
+    margin-top: 1.25rem;
+}
+
+.register_button-submit {
+    border: none;
+    color: #0073cc;
+    font-size: 0.8rem;
+    background: none;
+    cursor: pointer;
+}
+
+/* レスポンシブ対応 */
+
+/* タブレット対応 (768px～850px) */
+@media screen and (max-width: 850px) and (min-width: 768px) {
+    .login_form {
+        width: 70%;
+        padding-top: 6vh;
+    }
+
+    .button-submit {
+        font-size: 1rem;
+    }
+}
+
+/* スマホ対応 (768px以下) */
+@media screen and (max-width: 768px) {
+    .login_form {
+        width: 90%;
+        padding-top: 5vh;
+    }
+
+    .button-submit {
+        font-size: 0.8rem;
+    }
+}
+
+/* PCの最小幅対応 (1400px未満の場合) */
+@media screen and (max-width: 1400px) {
+    .login_form {
+        width: 50%;
+        padding-top: 6vh;
+    }
+}

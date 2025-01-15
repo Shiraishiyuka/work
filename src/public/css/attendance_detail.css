@@ -1,0 +1,197 @@
+.attendance-detail_screen {
+    width: 100%;
+    height: 100%;
+    background-color: #ececef;
+
+}
+
+.attendance-detail_screen_inner {
+    width: 60%;
+    height: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-space {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.title-line {
+    width: 3%;
+    height: 100%;
+    background-color: #000000;
+}
+
+.title-text {
+    font-size: 30px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.attendance-detail_table {
+    width: 100%;
+    height: 60%;
+    background-color: #ffffff;
+
+}
+
+
+.attendance-detail_row {
+    width: 100%;
+    height: 20%;
+    border-bottom: 1px #E1E1E1;
+    display: flex;
+    /* 子要素を横並びにする */
+    align-items: center;
+    /* 垂直方向に中央揃え */
+}
+
+.attendance-detail_text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #737373;
+}
+
+.attendance-detail_form-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+}
+
+
+/* ボタン */
+.button-group {
+    width: 100%;
+}
+.button {
+    margin-top: 4rem;
+    width: 25%;
+}
+
+.button-submit {
+    width: 100%;
+    height: 3rem;
+    font-size: 1.3rem;
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 0.1875rem;
+    cursor: pointer;
+}
+
+
+
+/* レスポンシブ対応 */
+
+/* タブレット対応 (768px～850px) */
+@media screen and (max-width: 850px) and (min-width: 768px) {
+    .attendance-detail_screen_inner {
+        width: 80%;
+        height: 85%;
+    }
+
+    .title-space {
+        gap: 15px;
+    }
+
+    .title-line {
+        width: 4%;
+    }
+
+    .title-text {
+        font-size: 24px;
+    }
+
+    .attendance-detail_text {
+        font-size: 14px;
+    }
+
+    .attendance-detail_form-text {
+        font-size: 14px;
+    }
+
+    .button {
+        width: 40%;
+        margin-top: 2rem;
+    }
+
+    .button-submit {
+        font-size: 1rem;
+    }
+}
+
+/* スマホ対応 (768px以下) */
+@media screen and (max-width: 768px) {
+    .attendance-detail_screen_inner {
+        width: 90%;
+        height: 80%;
+    }
+
+    .title-space {
+        gap: 10px;
+    }
+
+    .title-line {
+        width: 5%;
+    }
+
+    .title-text {
+        font-size: 20px;
+    }
+
+    .attendance-detail_text {
+        font-size: 12px;
+    }
+
+    .attendance-detail_form-text {
+        font-size: 12px;
+    }
+
+    .button {
+        width: 50%;
+        margin-top: 2rem;
+    }
+
+    .button-submit {
+        font-size: 0.8rem;
+    }
+}
+
+/* PCの最小幅対応 (1400px～1540px) */
+@media screen and (max-width: 1540px) and (min-width: 1400px) {
+    .attendance-detail_screen_inner {
+        width: 60%;
+        height: 90%;
+    }
+
+    .title-line {
+        width: 3%;
+    }
+
+    .title-text {
+        font-size: 30px;
+    }
+
+    .attendance-detail_text {
+        font-size: 16px;
+    }
+
+    .attendance-detail_form-text {
+        font-size: 16px;
+    }
+
+    .button {
+        width: 25%;
+    }
+
+    .button-submit {
+        font-size: 1.3rem;
+    }
+}

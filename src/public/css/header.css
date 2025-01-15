@@ -1,0 +1,67 @@
+/* 共通スタイル */
+.search {
+    width: 30%;
+    height: auto;
+    border: none;
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+
+/* header */
+.form {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.9375rem;
+    /* 15px */
+}
+
+.form_item {
+    font-size: 0.875rem;
+    /* 14px */
+    padding: 0 0.4375rem;
+    /* 7px */
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+
+/* タブレット対応 (768px～850px) */
+@media screen and (max-width: 850px) and (min-width: 768px) {
+    .logo {
+        width: 250px;
+    }
+
+    .form_item {
+        font-size: 12px;
+        padding: 0 5px;
+    }
+}
+
+/* スマホ対応 (768px以下) */
+@media screen and (max-width: 768px) {
+    .header__inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .logo {
+        width: 200px;
+    }
+
+    .form {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}

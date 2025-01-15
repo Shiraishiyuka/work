@@ -1,0 +1,258 @@
+.attendance-list_screen {
+    width: 100%;
+    height: 100%;
+    background-color: #ececef;
+
+}
+
+.attendance-list_screen_inner {
+    width: 60%;
+    height: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-space {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.title-line {
+    width: 3%;
+    height: 100%;
+    background-color: #000000;
+}
+
+.title-text {
+    font-size: 30px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.previous-month,
+.later-month {
+    display: flex;
+    /* 子要素を横並びにする */
+    align-items: center;
+    /* 垂直方向に中央揃え */
+    gap: 10px;
+    /* 画像とテキストの間に余白を追加 */
+}
+
+.previous-month_image,
+.later-month_image {
+    width: 25px;
+        /* 画像のサイズを固定 */
+        height: 25px;
+        object-fit: cover;
+}
+
+.images {
+    width: 25px;
+        height: 25px;
+    opacity: 0.3;
+}
+
+.previous-month_text,
+.later-month_text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #737373;
+}
+
+.calendar {
+    width: 125px;
+    height: 25px;
+    background-color: blue;
+    display: flex;
+        justify-content: flex-end;
+        align-items: center;
+}
+
+.download {
+    width: 25px;
+    height:25px;
+}
+
+.calendar_text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000000;
+}
+
+
+.indicate {
+    width: 100%;
+    height: 10%;
+    border-radius: 10px;
+    background-color: #ffffff;
+        display: flex;
+            justify-content: space-between;
+        
+
+
+}
+
+
+
+.attendance {
+    width: 100%;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+th {
+    width: 10%;
+    height: 5%;
+}
+
+td {
+    width: 10%;
+    height: 5%;
+    text-align: center;
+}
+
+
+
+/* レスポンシブ対応 */
+
+/* タブレット対応 (768px～850px) */
+@media screen and (max-width: 850px) and (min-width: 768px) {
+    .attendance-list_screen_inner {
+        width: 80%;
+        height: 85%;
+    }
+
+    .title-space {
+        gap: 15px;
+    }
+
+    .title-line {
+        width: 4%;
+    }
+
+    .title-text {
+        font-size: 24px;
+    }
+
+    .previous-month_image,
+    .later-month_image,
+    .images {
+        width: 20px;
+        height: 20px;
+    }
+
+    .previous-month_text,
+    .later-month_text {
+        font-size: 14px;
+    }
+
+    .calendar {
+        width: 100px;
+        height: 20px;
+    }
+
+    .calendar_text {
+        font-size: 16px;
+    }
+
+    th,
+    td {
+        font-size: 14px;
+    }
+}
+
+/* スマホ対応 (768px以下) */
+@media screen and (max-width: 768px) {
+    .attendance-list_screen_inner {
+        width: 90%;
+        height: 80%;
+    }
+
+    .title-space {
+        gap: 10px;
+    }
+
+    .title-line {
+        width: 5%;
+    }
+
+    .title-text {
+        font-size: 20px;
+    }
+
+    .previous-month_image,
+    .later-month_image,
+    .images {
+        width: 18px;
+        height: 18px;
+    }
+
+    .previous-month_text,
+    .later-month_text {
+        font-size: 12px;
+    }
+
+    .calendar {
+        width: 90px;
+        height: 18px;
+    }
+
+    .calendar_text {
+        font-size: 14px;
+    }
+
+    th,
+    td {
+        font-size: 12px;
+    }
+}
+
+/* PCの最小幅対応 (1400px～1540px) */
+@media screen and (max-width: 1540px) and (min-width: 1400px) {
+    .attendance-list_screen_inner {
+        width: 60%;
+        height: 90%;
+    }
+
+    .title-line {
+        width: 3%;
+    }
+
+    .title-text {
+        font-size: 30px;
+    }
+
+    .previous-month_image,
+    .later-month_image,
+    .images {
+        width: 25px;
+        height: 25px;
+    }
+
+    .previous-month_text,
+    .later-month_text {
+        font-size: 16px;
+    }
+
+    .calendar {
+        width: 125px;
+        height: 25px;
+    }
+
+    .calendar_text {
+        font-size: 20px;
+    }
+
+    th,
+    td {
+        font-size: 16px;
+    }
+}
