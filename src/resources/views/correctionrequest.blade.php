@@ -34,14 +34,16 @@
                     <th>詳細</th>
                 </tr>
 
+                 @foreach($adjustments as $adjust)
                 <tr>
                     <td>承認待ち</td>
-                    <td>西玲奈</td>
-                    <td>2023/06/01</td>
-                    <td>遅延のため</td>
-                    <td>2023/06/02</td>
-                    <td>詳細</td>
+                    <td>{{ $adjust->user->name }}</td>
+                    <td>{{ $adjust->original_date }}  {{ $adjust->date }}</td> 
+                    <td>{{ $adjust->remarks }}</td>
+                    <td>{{ $adjust->created_at->format('Y/m/d') }}</td>
+                    <td><a href="{{ route('attendancedetail', ['id' => $adjust->id]) }}">詳細</a></td>
                 </tr>
+                @endforeach
             </table>
         </div>
     </div>

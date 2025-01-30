@@ -19,21 +19,36 @@
         </div>
 
         <div class="indicate">
-            <div class="previous-month">
-                <div class="previous-month_image"><img src="{{ asset('storage/images/images.png') }}" class="images" alt="images"></div>
-                <div class="previous-month_text">前月</div>
+    <!-- 前月ボタン -->
+    <div class="previous-month">
+        <a href="{{ route('attendance.list', ['year' => $month == 1 ? $year - 1 : $year, 'month' => $month == 1 ? 12 : $month - 1]) }}">
+            <div class="previous-month_image">
+                <img src="{{ asset('storage/images/images.png') }}" class="images" alt="前月">
             </div>
+            <div class="previous-month_text">前月</div>
+        </a>
+    </div>
 
-            <div class="calendar">
-                <div class="calendar_image"><img src="{{ asset('storage/images/download-1.png') }}" class="download" alt="download"></div>
-                <div class="calendar_text">2023/06</div>
-            </div>
-
-            <div class="later-month">
-                <div class="later-month_image"><img src="{{ asset('storage/images/images.png') }}" class="images" alt="images"></div>
-                <div class="later-month_text">後月</div>
-            </div>
+    <!-- カレンダー表示 -->
+    <div class="calendar">
+        <div class="calendar_image">
+            <a href="{{ route('attendance.list', ['year' => $year, 'month' => $month]) }}">
+                <img src="{{ asset('storage/images/download-1.png') }}" class="download" alt="カレンダー">
+            </a>
         </div>
+        <div class="calendar_text">{{ sprintf('%04d/%02d', $year, $month) }}</div>
+    </div>
+
+    <!-- 次月ボタン -->
+    <div class="later-month">
+        <a href="{{ route('attendance.list', ['year' => $month == 12 ? $year + 1 : $year, 'month' => $month == 12 ? 1 : $month + 1]) }}">
+            <div class="later-month_image">
+                <img src="{{ asset('storage/images/images.png') }}" class="images" alt="次月">
+            </div>
+            <div class="later-month_text">次月</div>
+        </a>
+    </div>
+</div>
 
         <div class="attendance">
             <table class="attendance-record">

@@ -32,9 +32,13 @@ Route::post('/attendance/break', [AttendanceController::class, 'takeBreak'])->na
 Route::post('/attendance/break/end', [AttendanceController::class, 'endBreak'])->name('attendance.endBreak');
 Route::post('/attendance/end', [AttendanceController::class, 'endWork'])->name('attendance.endWork');
 
-
+// 勤怠一覧のルート
+Route::get('/attendance_list/{year?}/{month?}', [AttendanceListController::class, 'attendance_list'])
+    ->name('attendance.list');
 Route::get('/attendance_list', [AttendanceListController::class, 'attendance_list'])->name('attendance_list');
 
 Route::get('/correctionrequest', [CorrectionRequestController::class, 'correctionrequest'])->name('correctionrequest');
 
+
 Route::get('/attendancedetail/{id}', [AttendanceDetailController::class, 'attendancedetail'])->name('attendancedetail');
+Route::post('/attendancedetail/{id}/update', [AttendanceDetailController::class, 'update'])->name('attendancedetail.update');

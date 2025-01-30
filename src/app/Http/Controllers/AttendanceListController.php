@@ -5,17 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AttendanceListController extends Controller
 {
-    public function attendance_list()
+    public function attendance_list($year = null, $month = null)
     {
-        // ログインユーザーの勤怠データを取得
-        $attendances = Attendance::where('user_id', Auth::id())
-                                 ->orderBy('date', 'desc')
-                                 ->get();
+        $currentDate = Carbon::now();
 
-        // ビューにデータを渡す
-        return view('attendance_list', compact('attendances'));
+    $year = $year ?? $currentDate->year;
+    $month = $month ?? $currentDate->month;
+
+    $attendances = Attendance::where('user_id', Auth::id())
+                             ->whereYear('date', $year)
+                             ->whereMonth('date', $month)
+                             ->orderBy('date', 'desc')
+                             ->limit(100) // 最大100件まで取得
+                             ->get();
+
+    return view('attendance_list', compact('attendances', 'year', 'month'));
     }
 }

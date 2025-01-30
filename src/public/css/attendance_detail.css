@@ -17,7 +17,7 @@
 
 .title-space {
     width: 100%;
-    height: 10%;
+    height: 7%;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -35,9 +35,15 @@
     color: #000000;
 }
 
+.update-form {
+    width: 100%;
+    height: 200px;
+}
+
 .attendance-detail_table {
     width: 100%;
-    height: 60%;
+    height: 65%;
+    margin: 1.5rem auto;
     background-color: #ffffff;
 
 }
@@ -45,7 +51,8 @@
 
 .attendance-detail_row {
     width: 100%;
-    height: 20%;
+    height: 30%;
+    margin-left: 2rem;
     border-bottom: 1px #E1E1E1;
     display: flex;
     /* 子要素を横並びにする */
@@ -63,21 +70,23 @@
     font-size: 16px;
     font-weight: 700;
     color: #000000;
+    margin-right: 4trm;
 }
 
 
 /* ボタン */
 .button-group {
-    width: 100%;
+    width: 15%;
+    margin-left: 32.5rem;
 }
 .button {
     margin-top: 4rem;
-    width: 25%;
+    width: 20%;
 }
 
 .button-submit {
     width: 100%;
-    height: 3rem;
+    height: 2rem;
     font-size: 1.3rem;
     background-color: #000000;
     color: #FFFFFF;

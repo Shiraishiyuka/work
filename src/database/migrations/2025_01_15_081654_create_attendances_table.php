@@ -19,8 +19,13 @@ class CreateAttendancesTable extends Migration
             $table->date('date');                  // 勤務日
             $table->time('start_time')->nullable(); // 出勤時間
             $table->time('end_time')->nullable();   // 退勤時間
+            $table->time('break_end_time')->nullable();    // 休憩終了時間
+            $table->time('break_start_time')->nullable();  // 休憩開始時間
             $table->integer('break_minutes')->default(0); // 休憩の合計時間（分単位）
             $table->integer('work_minutes')->default(0);  // 勤務の合計時間（分単位）
+            $table->text('remarks')->nullable();           // 備考
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending'); // 修正ステータス
+            $table->json('break_times')->nullable(); // JSONカラムにはデフォルト値を設定しない
             $table->timestamps();
 
             // 外部キー制約
