@@ -7,6 +7,9 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceListController;
 use App\Http\Controllers\CorrectionRequestController;
 use App\Http\Controllers\AttendanceDetailController;
+use App\Http\Controllers\Admin\AdminListController;
+use App\Http\Controllers\Admin\AdminLoginController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +45,12 @@ Route::get('/correctionrequest', [CorrectionRequestController::class, 'correctio
 
 Route::get('/attendancedetail/{id}', [AttendanceDetailController::class, 'attendancedetail'])->name('attendancedetail');
 Route::post('/attendancedetail/{id}/update', [AttendanceDetailController::class, 'update'])->name('attendancedetail.update');
+
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::match(['get', 'post'],'/admin/login',[AdminLoginController::class, 'login'])->name('admin.login');
+    Route::match(['get', 'post'], [AdminListController::class, 'attendance_list'])->name('admin.attendance.list');
+    Route::get('/admin/attendance/list/{year?}/{month?}', [AdminListController::class, 'attendance_list'])
+    ->name('admin.attendance.list');
+});
