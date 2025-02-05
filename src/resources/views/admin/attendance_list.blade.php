@@ -11,12 +11,14 @@
 
 
 @section('content')
+
 <div class="attendance-list_screen">
     <div class="attendance-list_screen_inner">
         <div class="title-space">
             <div class="title-line"></div>
-            <span class="title-text">勤怠一覧</span>
+            <span class="title-text">{{  $currentDateTime->translatedFormat('Y年m月d日（D）') }}</span>
         </div>
+
 
         <div class="indicate">
     <!-- 前月ボタン -->
@@ -36,7 +38,7 @@
                 <img src="{{ asset('storage/images/download-1.png') }}" class="download" alt="カレンダー">
             </a>
         </div>
-        <div class="calendar_text">{{ sprintf('%04d/%02d', $year, $month) }}</div>
+        <div class="calendar_text">{{ isset($year) && isset($month) ? sprintf('%04d/%02d', $year, $month,now()->day) : '未設定' }}</div>
     </div>
 
     <!-- 次月ボタン -->
@@ -60,7 +62,7 @@
                     <th>合計</th>
                     <th>詳細</th>
                 </tr>
-                @foreach ($attendances as $attendance)
+                @foreach ($attendances ?? '' as $attendance)
                 <tr>
                     <td>{{ $attendance->date }}</td>
                     <td>{{ $attendance->start_time }}</td>
