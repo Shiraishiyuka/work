@@ -13,6 +13,6 @@ class ApplicationRequestController extends Controller
 
         $adjustments = Adjust::orderBy('created_at', 'desc')->get();
 
-        return view('admin.application_request', compact('adjustments'));
+        return view('admin.correction_request', compact('adjustments'));
     }
 }

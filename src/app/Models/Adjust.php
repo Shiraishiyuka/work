@@ -12,6 +12,8 @@ class Adjust extends Model
     protected $fillable = [
         'attendance_id',
         'user_id',
+        'original_date', // 修正前の日付
+        'date',          // 修正後の日付
         'start_time',
         'end_time',
         'break_minutes',

@@ -17,20 +17,24 @@
             <div class="title-line"></div>
             <span class="title-text">スタッフ一覧</span>
         </div>
-    </div>
+    
 
     <div class="attendance">
         <table class="attendance-record">
-            <tr>名前</tr>
-            <tr>メールアドレス</tr>
-            <tr>月次勤怠</tr>
+            <tr>
+                <th>名前</th>
+                <th>メールアドレス</th>
+                <th>月次勤怠</th>
+            </tr>
             @foreach ($users as $user)
-
-            <td>{{ $user->name }}</td>
-            <td>{{ $user->email }}</td>
-            <td>詳細</td>
+            <tr>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td><a href="{{ route('by_staff', ['id' => $user->id]) }}">詳細</a></td>
+            </tr>
             @endforeach
         </table>
+    </div>
     </div>
 </div>
 @endsection

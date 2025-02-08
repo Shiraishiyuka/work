@@ -21,8 +21,10 @@ class CreateAdjustsTable extends Migration
             $table->time('end_time')->nullable();
             $table->time('break_start_time')->nullable();
             $table->time('break_end_time')->nullable();
+             $table->integer('break_minutes')->default(0); // ✅ これを追加！
             $table->text('remarks')->nullable();
-            $table->date('date');
+            $table->date('date')->nullable();
+            $table->date('original_date')->nullable();
             $table->timestamps();
 
             // 外部キー制約

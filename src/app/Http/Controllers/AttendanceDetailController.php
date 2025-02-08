@@ -26,10 +26,10 @@ class AttendanceDetailController extends Controller
 
    public function update(Request $request, $id)
     {
-         // 勤怠データの取得（元の日付を取得）
+    // 勤怠データを取得（元の日付を取得）
     $attendance = Attendance::findOrFail($id);
 
-    // 年月日を `YYYY-MM-DD` 形式に結合
+    // `date` カラムに適切な値をセット（修正前の勤怠データの日付を利用）
     $fullDate = sprintf('%04d-%s', $request->year, $request->month_day);
 
     // 修正データを `adjusts` テーブルに保存（`attendances` テーブルは更新しない）
@@ -37,7 +37,7 @@ class AttendanceDetailController extends Controller
         'attendance_id' => $id,
         'user_id' => auth()->id(),
         'original_date' => $attendance->date, // 修正前の日付
-        'date' => $fullDate, // `YYYY-MM-DD` 形式で保存
+        'date' => $fullDate, // 修正後の日付
         'start_time' => $request->start_time,
         'end_time' => $request->end_time,
         'break_start_time' => $request->break_start_time,

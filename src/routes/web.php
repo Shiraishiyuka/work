@@ -11,7 +11,9 @@ use App\Http\Controllers\Admin\AdminListController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\StaffListController;
 use App\Http\Controllers\Admin\ApplicationRequestController;
-
+use App\Http\Controllers\Admin\AdminAttendanceController;
+use App\Http\Controllers\Admin\ByStaffListController;
+use App\Http\Controllers\Admin\ApplicationApprovalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,9 +51,12 @@ Route::get('/attendancedetail/{id}', [AttendanceDetailController::class, 'attend
 Route::post('/attendancedetail/{id}/update', [AttendanceDetailController::class, 'update'])->name('attendancedetail.update');
 
 
+Route::get('/admin/login', [AdminLoginController::class, 'admin_login'])->name('admin.login');
+Route::post('/admin/login', [AdminLoginController::class, 'authenticate'])->name('admin.authenticate');
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login');
+    
 
     // 管理者の勤怠一覧ページは GET のみにする
     Route::match(['get', 'post'], '/admin/attendance/list/{year?}/{month?}', [AdminListController::class, 'attendance_list'])
@@ -59,6 +64,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/admin/staff/list', [StaffListController::class, 'staff_list'])->name('admin.staff_list');
 
+    Route::get('/admin/attendance/staff/{id}', [ByStaffListController::class, 'by_staff'])->name('by_staff');
+
     //申請一覧
     Route::get('/stamp_correction_request/list', [ApplicationRequestController::class, 'application_request'])->name('admin.application_request');
+
+
+    Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'admin_attendance'])
+        ->name('admin.attendance');
+
+    Route::post('/admin/attendance/{id}/update', [AdminAttendanceController::class, 'update_attendance'])
+        ->name('admin.attendance.update');
+
+    Route::match(['get', 'post'],'/stamp_correction_request/approve{id}', [ApplicationApprovalController::class, 'approval'])->name('approval');
+    
 });

@@ -11,26 +11,23 @@ class AdminListController extends Controller
 {
     public function attendance_list(Request $request, $year = null, $month = null)
     {
-        if (!$year || !$month) {
-            $currentDate = Carbon::now();
-            $year = $currentDate->year;
-            $month = $currentDate->month;
-        }
+        // URLパラメータから `date` を取得（指定がない場合は今日）
+    $date = $request->query('date', Carbon::today()->toDateString());
 
-        // 現在の時刻を取得
-        $currentDateTime = Carbon::now();
+    // Carbon インスタンスに変換
+    $currentDate = Carbon::parse($date);
 
-        // **ここで `$attendances` を取得**
-        $attendances = Attendance::whereYear('date', $year)
-                                 ->whereMonth('date', $month)
-                                 ->orderBy('date', 'desc')
-                                 ->get();
+    // 前日・次日を計算
+    $previousDate = $currentDate->copy()->subDay()->toDateString();
+    $nextDate = $currentDate->copy()->addDay()->toDateString();
 
-        return view('admin.attendance_list', [
-            'year' => (int)$year,
-            'month' => (int)$month,
-            'currentDateTime' => $currentDateTime,
-            'attendances' => $attendances, // ← `$attendances` を渡す
-        ]);
+    // 該当日の勤怠データを取得
+    $attendances = Attendance::with('user')
+        ->whereDate('date', $currentDate)
+        ->orderBy('start_time', 'asc')
+        ->get();
+                                 
+
+        return view('admin.attendance_list', compact('currentDate', 'previousDate', 'nextDate', 'attendances'));
     }
 }

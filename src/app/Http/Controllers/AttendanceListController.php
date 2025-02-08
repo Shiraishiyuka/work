@@ -11,18 +11,29 @@ class AttendanceListController extends Controller
 {
     public function attendance_list($year = null, $month = null)
     {
-        $currentDate = Carbon::now();
+        // 指定がない場合は今日の日付を設定
+        if (!$date) {
+            $date = Carbon::today()->toDateString();
+        }
 
-    $year = $year ?? $currentDate->year;
-    $month = $month ?? $currentDate->month;
+        // **Carbon インスタンスに変換**
+        $currentDate = Carbon::parse($date);
 
-    $attendances = Attendance::where('user_id', Auth::id())
-                             ->whereYear('date', $year)
-                             ->whereMonth('date', $month)
-                             ->orderBy('date', 'desc')
-                             ->limit(100) // 最大100件まで取得
-                             ->get();
+        // **前日・次日を計算**
+        $previousDate = $currentDate->copy()->subDay()->toDateString();
+        $nextDate = $currentDate->copy()->addDay()->toDateString();
 
-    return view('attendance_list', compact('attendances', 'year', 'month'));
+        // **この日付のデータのみ取得**
+        $attendances = Attendance::with('user')
+            ->whereDate('date', $currentDate)
+            ->orderBy('start_time', 'asc')
+            ->get();
+
+        return view('admin.attendance_list', [
+            'currentDate' => $currentDate,  // **Carbon インスタンス**
+            'previousDate' => $previousDate, 
+            'nextDate' => $nextDate,
+            'attendances' => $attendances,
+        ]);
     }
 }
