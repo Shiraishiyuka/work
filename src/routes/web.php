@@ -76,6 +76,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/attendance/{id}/update', [AdminAttendanceController::class, 'update_attendance'])
         ->name('admin.attendance.update');
 
-    Route::match(['get', 'post'],'/stamp_correction_request/approve{id}', [ApplicationApprovalController::class, 'approval'])->name('approval');
+    Route::match(['get', 'post'],'/stamp_correction_request/approve/{attendance_correct_request}', [ApplicationApprovalController::class, 'approval'])->name('approval');
     
 });

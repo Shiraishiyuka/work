@@ -42,7 +42,8 @@
                         <td>{{ $adjust->original_date }}  {{ $adjust->date }}</td> 
                         <td>{{ $adjust->remarks }}</td>
                         <td>{{ $adjust->created_at->format('Y/m/d') }}</td>
-                        <td><a href="{{ route('approval', ['id' => $adjust->id]) }}">詳細</a></td>
+                        <td><a href="{{ route('approval', ['attendance_correct_request' => $adjust->id]) }}">詳細</a></td>
+
                     </tr>
                     @endforeach
                 </table>
