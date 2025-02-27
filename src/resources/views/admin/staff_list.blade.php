@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.admin')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/attendance_list.css') }}" />
@@ -6,7 +6,7 @@
 @endsection
 
 @section('header')
-@include('partials.header')
+@include('partials.admin_header')
 @endsection
 
 

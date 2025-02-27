@@ -59,9 +59,16 @@ class AttendanceController extends BaseController
 
     public function takeBreak(Request $request)
 {
-    // 休憩入ボタンを押したときの処理
     session(['attendance_status' => 'on_break']);
-    session(['break_start_time' => Carbon::now()]); // 休憩開始時刻をセッションに保存
+
+    $attendance = \App\Models\Attendance::where('user_id', auth()->id())
+                                        ->whereDate('date', Carbon::now()->format('Y-m-d'))
+                                        ->first();
+
+    if ($attendance) {
+        $attendance->break_start_time = Carbon::now()->format('H:i:s'); // 休憩開始時間を保存
+        $attendance->save();
+    }
 
     return redirect()->route('attendance.show');
 }
@@ -69,22 +76,24 @@ class AttendanceController extends BaseController
 
     public function endBreak(Request $request)
 {
-    // 休憩戻ボタンを押したときの処理
     session(['attendance_status' => 'working']);
 
-    // 休憩終了時刻を取得
-    $breakStartTime = session('break_start_time');
-    $breakEndTime = Carbon::now();
-
-    // 休憩時間を計算（分単位）
-    $breakMinutes = $breakStartTime->diffInMinutes($breakEndTime);
-
-    // 出勤中の勤怠データを取得し、休憩時間を更新
     $attendance = \App\Models\Attendance::where('user_id', auth()->id())
                                         ->whereDate('date', Carbon::now()->format('Y-m-d'))
                                         ->first();
-    $attendance->break_minutes += $breakMinutes; // 休憩の合計時間を加算
-    $attendance->save();
+
+    if ($attendance && $attendance->break_start_time) {
+        $breakStartTime = Carbon::createFromFormat('H:i:s', $attendance->break_start_time);
+        $breakEndTime = Carbon::now();
+
+        // 休憩時間を計算
+        $breakMinutes = $breakStartTime->diffInMinutes($breakEndTime);
+
+        // データベースに保存
+        $attendance->break_end_time = $breakEndTime->format('H:i:s');
+        $attendance->break_minutes += $breakMinutes; // 休憩の合計時間を更新
+        $attendance->save();
+    }
 
     return redirect()->route('attendance.show');
 }

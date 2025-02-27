@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/attendance_detail.css') }}" />
@@ -6,7 +6,7 @@
 @endsection
 
 @section('header')
-@include('partials.header')
+@include('partials.admin_header')
 @endsection
 
 
@@ -20,7 +20,7 @@
         </div>
 
         <div class="attendance-detail_table">
-            <form method="POST" action="{{ route('attendancedetail.update', ['id' => $attendance->id]) }}">
+            <form method="POST" action="{{ route('admin.application.approve', ['id' => $attendance->id]) }}">
                 @csrf
 
                 <div class="attendance-detail_row">
@@ -83,7 +83,11 @@
                 </div>
 
                 <div class="button-group">
-                    <button type="submit" class="button-submit">修正</button>
+                    @if ($adjust && $adjust->status === 'approved')
+                        <div class="class="button-submit">承認する</div>
+                    @else
+                        <button type="submit" class="button-submit">承認する</button>
+                    @endif
                 </div>
             </form>
         </div>

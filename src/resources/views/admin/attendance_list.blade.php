@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.admin')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/attendance_list.css') }}" />
@@ -6,11 +6,13 @@
 @endsection
 
 @section('header')
-@include('partials.header')
+@include('partials.admin_header')
 @endsection
 
 
 @section('content')
+
+
 
 <div class="attendance-list_screen">
     <div class="attendance-list_screen_inner">
@@ -19,37 +21,39 @@
             <span class="title-text">{{ $currentDate->translatedFormat('Y年m月d日（D）') }}</span>
         </div>
 
-        <div class="indicate">
-            <!-- 前日ボタン -->
-            <div class="previous-day">
-                <a href="{{ route('admin.attendance.list', ['date' => $previousDate]) }}">
-                    <div class="previous-day_image">
-                        <img src="{{ asset('storage/images/images.png') }}" class="images" alt="前日">
-                    </div>
-                    <div class="previous-day_text">前日</div>
-                </a>
-            </div>
 
-            <!-- カレンダー表示 -->
-            <div class="calendar">
-                <div class="calendar_image">
-                    <a href="{{ route('admin.attendance.list', ['date' => $currentDate->toDateString()]) }}">
-                        <img src="{{ asset('storage/images/download-1.png') }}" class="download" alt="カレンダー">
-                    </a>
-                </div>
-                <div class="calendar_text">{{ $currentDate->format('Y/m/d') }}</div>
+    <div class="indicate">
+    <!-- 前日ボタン -->
+    <div class="previous-day">
+        <a href="{{ route('admin.attendance.list', ['date' => $previousDate]) }}">
+            <div class="previous-day_image">
+                <img src="{{ asset('storage/images/images.png') }}" class="images" alt="前日">
             </div>
+            <div class="previous-day_text">前日</div>
+        </a>
+    </div>
 
-            <!-- 次日ボタン -->
-            <div class="next-day">
-                <a href="{{ route('admin.attendance.list', ['date' => $nextDate]) }}">
-                    <div class="next-day_image">
-                        <img src="{{ asset('storage/images/images.png') }}" class="images" alt="次日">
-                    </div>
-                    <div class="next-day_text">次日</div>
-                </a>
-            </div>
+    <!-- カレンダー表示（**日単位に変更**） -->
+    <div class="calendar">
+        <div class="calendar_image">
+            <a href="{{ route('admin.attendance.list', ['date' => $currentDate->toDateString()]) }}">
+                <img src="{{ asset('storage/images/download-1.png') }}" class="download" alt="カレンダー">
+            </a>
         </div>
+        <div class="calendar_text">{{ $currentDate->format('Y/m/d') }}</div> <!-- ✅ 日付を表示 -->
+    </div>
+
+    <!-- 翌日ボタン -->
+    <div class="next-day">
+        <a href="{{ route('admin.attendance.list', ['date' => $nextDate]) }}">
+            <div class="next-day_image">
+                <img src="{{ asset('storage/images/images.png') }}" class="images" alt="翌日">
+            </div>
+            <div class="next-day_text">翌日</div>
+        </a>
+    </div>
+</div>
+
 
         <!-- 勤怠データ表示 -->
             <div class="attendance">
@@ -69,7 +73,7 @@
                         <td>{{ $attendance->end_time ?? '-' }}</td>
                         <td>{{ floor($attendance->break_minutes / 60) }}時間{{ $attendance->break_minutes % 60 }}分</td>
                         <td>{{ floor($attendance->work_minutes / 60) }}時間{{ $attendance->work_minutes % 60 }}分</td>
-                        <td><a href="{{ route('attendancedetail', ['id' => $attendance->id]) }}">詳細</a></td>
+                        <td><a href="{{ route('admin_attendance', ['id' => $attendance->id]) }}">詳細</a></td>
                     </tr>
                     @endforeach
                 </table>

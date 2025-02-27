@@ -7,49 +7,60 @@ use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\Adjust;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AttendanceRequest;
+use App\Http\Controllers\AdminBaseController;
 
-class AdminAttendanceController extends Controller
+class AdminAttendanceController extends AdminBaseController
 {
-    public function admin_attendance(Request $request,$id){
-        $attendance = Attendance::with('user')->findOrFail($id);
+    public function admin_attendance(Request $request, $id)
+{
+    // リダイレクト処理を呼び出し
+    $redirect = $this->handleRedirects($request);
+    if ($redirect) {
+        return $redirect;
+    }
+    
+    $attendance = Attendance::with('user')->findOrFail($id);
 
-        // `break_times` が null または空文字の場合、デフォルト値を設定
-        if (empty($attendance->break_times)) {
-            $attendance->break_times = json_encode([]);
-        }
+    // **該当勤怠データの修正申請が「承認待ち」かどうかをチェック**
+    $hasPendingApproval = Adjust::where('attendance_id', $id)
+        ->where('status', 'pending') // **ステータスが承認待ちのもの**
+        ->exists(); // **存在するかどうか**
 
-        return view('admin_attendance', compact('attendance'));
+    // **休憩時間 (分) を計算**
+    $break_minutes = 0;
+    if ($attendance->break_start_time && $attendance->break_end_time) {
+        $start = \Carbon\Carbon::parse($attendance->break_start_time);
+        $end = \Carbon\Carbon::parse($attendance->break_end_time);
+        $break_minutes = $start->diffInMinutes($end);
     }
 
-     public function update_attendance(Request $request, $id)
+    return view('admin.admin_attendance', compact('attendance', 'hasPendingApproval', 'break_minutes'));
+}
+
+    
+     public function update_attendance(AttendanceRequest $request, $id)
     {
+        // 勤怠データを取得（元の日付を取得）
         $attendance = Attendance::findOrFail($id);
 
-        // `user_id` を取得（`request` から取得し、ない場合は `attendance` の `user_id` を使用）
-        $userId = $request->input('user_id', $attendance->user_id);
+        // `date` カラムに適切な値をセット（修正前の勤怠データの日付を利用）
+        $fullDate = sprintf('%04d-%s', $request->year, $request->month_day);
 
-        if (!$userId) {
-        return redirect()->back()->withErrors(['user_id' => 'ユーザーIDが見つかりませんでした。']);
-        }
-
-        // 修正データを `adjusts` テーブルに保存（変更履歴を記録）
+        // 修正データを `adjusts` テーブルに保存（`attendances` テーブルは更新しない）
         Adjust::create([
-            'attendance_id' => $id,
-            'user_id' => $userId, // 従業員のIDをセット
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'break_minutes' => $request->break_minutes,
-            'remarks' => $request->remarks,
-        ]);
+        'attendance_id' => $id,
+        'user_id' => auth()->id(),
+        'original_date' => $attendance->date, // 修正前の日付
+        'date' => $fullDate, // 修正後の日付
+        'start_time' => $request->start_time,
+        'end_time' => $request->end_time,
+        'break_start_time' => $request->break_start_time,
+        'break_end_time' => $request->break_end_time,
+        'remarks' => $request->remarks,
+    ]);
 
-        /* `attendances` テーブルのデータも更新
-        $attendance->update([
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'break_minutes' => $request->break_minutes,
-        ]);
-        */
 
-        return redirect()->route('admin.application_request', ['id' => $id]);
+        return redirect()->route('admin.application_request')->with('message', '修正申請が完了しました。');
     }
 }

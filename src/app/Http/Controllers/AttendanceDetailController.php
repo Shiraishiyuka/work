@@ -6,25 +6,27 @@ use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\Adjust;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AttendanceRequest;
+use App\Http\Controllers\BaseController;
 
-class AttendanceDetailController extends Controller
+class AttendanceDetailController extends BaseController
 {
      public function attendancedetail($id)
 {
     // 勤怠データを取得
     $attendance = Attendance::with('user')->findOrFail($id);
 
-    // `break_times` が null または空文字の場合、デフォルト値を設定
-    if (empty($attendance->break_times)) {
-        $attendance->break_times = json_encode([]);
-    }
+     // **該当勤怠データの修正申請が「承認待ち」かどうかをチェック**
+    $hasPendingApproval = Adjust::where('attendance_id', $id)
+        ->where('status', 'pending') // **ステータスが承認待ちのもの**
+        ->exists(); // **存在するかどうか**
 
-    // ビューにデータを渡して詳細ページを表示
-    return view('attendance_detail', compact('attendance'));
+    // ビューにデータを渡す
+    return view('attendance_detail', compact('attendance', 'hasPendingApproval'));
 }
 
 
-   public function update(Request $request, $id)
+   public function update(AttendanceRequest $request, $id)
     {
     // 勤怠データを取得（元の日付を取得）
     $attendance = Attendance::findOrFail($id);

@@ -20,7 +20,6 @@
     height: 10%;
     display: flex;
     align-items: center;
-    gap: 20px;
 }
 
 .title-line {
@@ -94,9 +93,6 @@
     background-color: #ffffff;
         display: flex;
             justify-content: space-between;
-        
-
-
 }
 
 

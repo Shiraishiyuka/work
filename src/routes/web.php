@@ -48,6 +48,7 @@ Route::get('/correctionrequest', [CorrectionRequestController::class, 'correctio
 
 
 Route::get('/attendancedetail/{id}', [AttendanceDetailController::class, 'attendancedetail'])->name('attendancedetail');
+
 Route::post('/attendancedetail/{id}/update', [AttendanceDetailController::class, 'update'])->name('attendancedetail.update');
 
 
@@ -59,7 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
 
     // 管理者の勤怠一覧ページは GET のみにする
-    Route::match(['get', 'post'], '/admin/attendance/list/{year?}/{month?}', [AdminListController::class, 'attendance_list'])
+    Route::match(['get', 'post'], '/admin/attendance/list/{year?}/{month?}', [AdminListController::class, 'admin_list'])
         ->name('admin.attendance.list');
 
     Route::get('/admin/staff/list', [StaffListController::class, 'staff_list'])->name('admin.staff_list');
@@ -70,12 +71,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/stamp_correction_request/list', [ApplicationRequestController::class, 'application_request'])->name('admin.application_request');
 
 
-    Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'admin_attendance'])
-        ->name('admin.attendance');
+    Route::match(['get', 'post'], '/attendancedetaillist/{id}', [AdminAttendanceController::class, 'admin_attendance'])->name('admin_attendance');
+    Route::post('/attendancedetaillist/{id}/update', [AdminAttendanceController::class, 'update_attendance'])->name('admin.update');
 
-    Route::post('/admin/attendance/{id}/update', [AdminAttendanceController::class, 'update_attendance'])
-        ->name('admin.attendance.update');
 
     Route::match(['get', 'post'],'/stamp_correction_request/approve/{attendance_correct_request}', [ApplicationApprovalController::class, 'approval'])->name('approval');
-    
+    Route::post('/admin/application/approve/{id}', [ApplicationApprovalController::class, 'approve'])
+    ->name('admin.application.approve');
 });

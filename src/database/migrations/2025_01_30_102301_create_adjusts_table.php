@@ -21,10 +21,12 @@ class CreateAdjustsTable extends Migration
             $table->time('end_time')->nullable();
             $table->time('break_start_time')->nullable();
             $table->time('break_end_time')->nullable();
-             $table->integer('break_minutes')->default(0); // ✅ これを追加！
+            $table->integer('break_minutes')->default(0);
             $table->text('remarks')->nullable();
             $table->date('date')->nullable();
             $table->date('original_date')->nullable();
+            $table->enum('status', ['pending', 'approved'])->default('pending'); 
+            $table->boolean('application')->default(false);
             $table->timestamps();
 
             // 外部キー制約
@@ -41,11 +43,11 @@ class CreateAdjustsTable extends Migration
     public function down()
     {
         Schema::table('adjusts', function (Blueprint $table) {
-        $table->dropForeign(['attendance_id']); // 外部キー制約を削除
-        $table->dropForeign(['user_id']);       // ユーザー外部キーも削除
+        $table->dropForeign(['attendance_id']);
+        $table->dropForeign(['user_id']);
     });
 
-    Schema::dropIfExists('adjusts'); // `adjusts` テーブルを削除
+    Schema::dropIfExists('adjusts');
 
     
     }

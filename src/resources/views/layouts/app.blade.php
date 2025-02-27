@@ -55,7 +55,7 @@
         <div class="header__inner">
             <a href="logo"><img src="{{ asset('storage/images/logo.svg') }}" class="logo" alt="Logo"></a>
 
-            @yield('header')
+            @yield('header') {{-- 従業員用ヘッダー --}}
         </div>
         
     </header>

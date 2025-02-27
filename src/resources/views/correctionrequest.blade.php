@@ -19,9 +19,15 @@
         </div>
 
         <div class="approval">
-            <div class="approval_text">承認待ち</div>
-            <div class="approval_text">承認済み</div>
-        </div>
+    <a href="{{ route('correctionrequest', ['status' => 'pending']) }}" 
+       class="approval_text {{ request('status', 'pending') === 'pending' ? 'active' : '' }}">
+       承認待ち
+    </a>
+    <a href="{{ route('correctionrequest', ['status' => 'approved']) }}" 
+       class="approval_text {{ request('status', 'pending') === 'approved' ? 'active' : '' }}">
+       承認済み
+    </a>
+</div>
 
         <div class="petition">
             <table class="petition-table">
@@ -36,12 +42,20 @@
 
                  @foreach($adjustments as $adjust)
                 <tr>
-                    <td>承認待ち</td>
+                    <td>
+                         {{ $adjust->status === 'approved' ? '承認済み' : '承認待ち' }}
+                    </td>
                     <td>{{ $adjust->user->name }}</td>
                     <td>{{ $adjust->original_date }}  {{ $adjust->date }}</td> 
                     <td>{{ $adjust->remarks }}</td>
                     <td>{{ $adjust->created_at->format('Y/m/d') }}</td>
-                    <td><a href="{{ route('attendancedetail', ['id' => $adjust->id]) }}">詳細</a></td>
+                    <td>
+    @if ($adjust->attendance)
+        <a href="{{ route('attendancedetail', ['id' => $adjust->attendance->id]) }}">詳細</a>
+    @else
+        <span>詳細なし</span>
+    @endif
+</td>
                 </tr>
                 @endforeach
             </table>

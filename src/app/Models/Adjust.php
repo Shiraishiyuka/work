@@ -16,8 +16,11 @@ class Adjust extends Model
         'date',          // 修正後の日付
         'start_time',
         'end_time',
+        'break_start_time',
+        'break_end_time',
         'break_minutes',
         'remarks',
+        'application',
     ];
 
     public function user()

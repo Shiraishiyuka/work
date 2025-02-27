@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.admin')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/attendance_list.css') }}" />
@@ -6,7 +6,7 @@
 @endsection
 
 @section('header')
-@include('partials.header')
+@include('partials.admin_header')
 @endsection
 
 
@@ -17,9 +17,52 @@
             <div class="title-line"></div>
             <span class="title-text">{{ $user->name }} さんの勤怠</span>
         </div>
-    
 
-    <div class="attendance">
+ <div class="indicate">
+<!-- 前月ボタン -->
+<div class="previous-month">
+    <a href="{{ route('by_staff', [
+        'id' => $user->id,
+        'year' => ($month == 1) ? ($year - 1) : $year,
+        'month' => ($month == 1) ? 12 : ($month - 1)
+    ]) }}">
+        <div class="previous-month_image">
+            <img src="{{ asset('storage/images/images.png') }}" class="images" alt="前月">
+        </div>
+        <div class="previous-month_text">前月</div>
+    </a>
+</div>
+
+<!-- カレンダー表示 -->
+<div class="calendar">
+    <div class="calendar_image">
+        <a href="{{ route('by_staff', [
+            'id' => $user->id,
+            'year' => $year,
+            'month' => $month
+        ]) }}">
+            <img src="{{ asset('storage/images/download-1.png') }}" class="download" alt="カレンダー">
+        </a>
+    </div>
+    <div class="calendar_text">{{ sprintf('%04d/%02d', $year, $month) }}</div>
+</div>
+
+<!-- 次月ボタン -->
+<div class="later-month">
+    <a href="{{ route('by_staff', [
+        'id' => $user->id,
+        'year' => ($month == 12) ? ($year + 1) : $year,
+        'month' => ($month == 12) ? 1 : ($month + 1)
+    ]) }}">
+        <div class="later-month_image">
+            <img src="{{ asset('storage/images/images.png') }}" class="images" alt="次月">
+        </div>
+        <div class="later-month_text">次月</div>
+    </a>
+</div>
+</div>
+
+        <div class="attendance">
                 <table class="attendance-record">
                     <tr>
                         <th>日付</th>
@@ -40,7 +83,7 @@
                     </tr>
                     @endforeach
                 </table>
-            </div>
+        </div>
     </div>
 </div>
 @endsection
