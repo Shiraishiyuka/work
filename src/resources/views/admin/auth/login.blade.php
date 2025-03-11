@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<form class="login_form" action="{{ route('admin.attendance.list') }}" method="post">
+<form class="login_form" action="{{ route('attendance.show') }}" method="post">
     @csrf
     <h1 class="login-title">管理者ログイン</h1>
     <div class="login-content">

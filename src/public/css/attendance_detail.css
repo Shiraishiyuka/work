@@ -2,7 +2,6 @@
     width: 100%;
     height: 100%;
     background-color: #ececef;
-
 }
 
 .attendance-detail_screen_inner {
@@ -45,25 +44,56 @@
     height: 65%;
     margin: 1.5rem auto;
     background-color: #ffffff;
+    padding-left: 2.2rem;
+    padding-top: 1rem;
 
 }
 
-
+.attendance-detail_textarea {
+    font-size: 16px;
+        font-weight: 700;
+        color: #737373;
+        width: 130px;
+}
 .attendance-detail_row {
-    width: 100%;
-    height: 30%;
-    margin-left: 2rem;
-    border-bottom: 1px #E1E1E1;
     display: flex;
-    /* 子要素を横並びにする */
+    justify-content: space-between;
+    /* 要素間の間隔を均等に配置 */
     align-items: center;
-    /* 垂直方向に中央揃え */
+    /* 縦方向の中央揃え */
+    gap: 85px;
+    /* 各項目の間隔を設定 */
+    width: 90%;
+    padding: 10px 0;
 }
 
 .attendance-detail_text {
     font-size: 16px;
     font-weight: 700;
     color: #737373;
+}
+
+.attendance-detail_text,
+.attendance-detail_form-text {
+    flex: 1;
+    /* 各要素を均等な幅にする */
+    min-width: 100px;
+    /* 幅が極端に狭くならないように制限 */
+}
+
+.attendance-detail_form-text input,
+.attendance-detail_form-text select {
+    width: 80%;
+    /* 親要素に合わせる */
+    padding: 8px;
+    font-size: 16px;
+}
+
+.attendance-detail_form-text textarea {
+    width: 100%;
+        /* 親要素に合わせる */
+
+        font-size: 16px;
 }
 
 .attendance-detail_form-text {
@@ -76,8 +106,9 @@
 
 /* ボタン */
 .button-group {
-    width: 15%;
-    margin-left: 32.5rem;
+    width: 100%;
+    height: auto;
+
 }
 .button {
     margin-top: 4rem;
@@ -96,6 +127,63 @@
 }
 
 
+p {
+    width: 100%;
+}
+
+
+/* 出勤時間と退勤時間の間に「〜」を表示 */
+.attendance-detail_time {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* 間隔を調整 */
+}
+
+.attendance-detail_time span {
+    font-size: 16px;
+    font-weight: 700;
+    color: #737373;
+}
+
+/* テーブルの各行の下に仕切り線を追加 */
+.attendance-detail_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 85px;
+    width: 90%;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    /* 仕切り線を追加 */
+}
+
+.attendance-detail_row:last-child {
+    border-bottom: none;
+    /* 最後の行には線をつけない */
+}
+
+/* 名前の項目を左揃えにする */
+.attendance-detail_form-text {
+    text-align: left;
+    /* 左揃え */
+}
+
+
+/* 承認待ちメッセージを右揃えにする */
+.button-text {
+    text-align: right;
+    display: block;
+    /* インライン要素ではなくブロック要素にする */
+    width: 100%;
+}
+
+
+
+.attendance-detail_row .attendance-detail_form-text {
+    flex: 2;
+    /* 名前と日付のフィールドの幅を統一 */
+}
 
 /* レスポンシブ対応 */
 

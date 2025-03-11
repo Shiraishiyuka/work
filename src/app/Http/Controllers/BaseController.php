@@ -35,9 +35,5 @@ class BaseController extends Controller
             return redirect()->route('login.show');
         }
 
-
-
-
-        return abort(404); // **🔹 意図しないアクセスの場合、404エラーを返す**
     }
 }

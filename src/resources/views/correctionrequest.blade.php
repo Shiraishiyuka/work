@@ -15,7 +15,7 @@
     <div class="correction_screen_inner">
         <div class="title-space">
             <div class="title-line"></div>
-            <span class="title-text">申請一覧</span>
+            <span class="title-text">申請一覧2</span>
         </div>
 
         <div class="approval">

@@ -9,7 +9,6 @@
     @csrf
     <h1 class="login-title">ログイン</h1>
     <div class="login-content">
-        <!-- ユーザー名/メールアドレス -->
         <div class="form-group">
             <label>ユーザー名/メールアドレス
                 <input type="email" class="text" name="email" value="{{ old('email') }}" />
