@@ -41,7 +41,7 @@
 
 .attendance-detail_table {
     width: 100%;
-    height: 65%;
+    height: 75%;
     margin: 1.5rem auto;
     background-color: #ffffff;
     padding-left: 2.2rem;
@@ -64,6 +64,7 @@
     gap: 85px;
     /* 各項目の間隔を設定 */
     width: 90%;
+    height: 3rem;
     padding: 10px 0;
 }
 
@@ -102,6 +103,24 @@
     color: #000000;
     margin-right: 4trm;
 }
+
+.attendance-detail_form-group {
+    display: flex;
+    flex-direction: column;
+    /* 🔹 縦方向に要素を並べる */
+    align-items: flex-start;
+    /* 🔹 左寄せにする */
+    position: relative;
+    /* 🔹 エラーメッセージを適切に配置 */
+}
+
+.form_error {
+    color: red;
+    font-size: 12px;
+    /* 🔹 入力欄のすぐ下に配置 */
+}
+
+✅ エラー
 
 
 /* ボタン */

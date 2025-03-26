@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+/*use App\Http\Controllers\Controller;*/
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+/*use Illuminate\Support\Facades\Auth;*/
 use App\Http\Controllers\BaseController;
 
 
@@ -56,5 +56,52 @@ class ByStaffListController extends BaseController
             'month' => $month
         ]);
     }
+
+    public function exportCsv(Request $request, $id)
+{
+    $year = $request->query('year', Carbon::today()->year);
+    $month = $request->query('month', Carbon::today()->month);
+
+    $user = User::findOrFail($id);
+
+    // 指定された月の勤怠データを取得
+    $attendances = Attendance::where('user_id', $id)
+        ->whereYear('date', $year)
+        ->whereMonth('date', $month)
+        ->orderBy('date', 'asc')
+        ->get();
+
+    // CSVのヘッダー
+    $csvHeader = ["日付", "出勤", "退勤", "休憩時間", "勤務時間"];
+
+    // CSVデータを作成
+    $csvData = [];
+    foreach ($attendances as $attendance) {
+        $csvData[] = [
+            $attendance->date,
+            $attendance->start_time,
+            $attendance->end_time ?? '-',
+            floor($attendance->break_minutes / 60) . "時間" . ($attendance->break_minutes % 60) . "分",
+            floor($attendance->work_minutes / 60) . "時間" . ($attendance->work_minutes % 60) . "分"
+        ];
+    }
+
+    // CSVファイル名
+    $fileName = "{$user->name}_{$year}_{$month}_勤怠.csv";
+
+    // レスポンスでCSVを返す
+    $handle = fopen('php://temp', 'r+');
+    fputcsv($handle, $csvHeader);
+    foreach ($csvData as $row) {
+        fputcsv($handle, $row);
+    }
+    rewind($handle);
+    $csvOutput = stream_get_contents($handle);
+    fclose($handle);
+
+    return response($csvOutput)
+        ->header('Content-Type', 'text/csv')
+        ->header('Content-Disposition', "attachment; filename=\"$fileName\"");
+}
 }
 

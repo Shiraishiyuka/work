@@ -8,12 +8,13 @@
 
 .attendance-screen_inner {
     width: 50%;
-    height: 60%;
+    height: auto;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 .work-status {
@@ -34,7 +35,7 @@
 }
 
 .word-date {
-    width: 350px;
+    width: 500px;
     height: 50px;
     margin-bottom: 1rem;
 }
@@ -98,6 +99,28 @@
             color: #FFFFFF;
             /* 白文字を設定 */
             text-align: center;
+}
+
+.break-processing {
+    width: auto;
+        /* 固定幅ではなく自動幅に変更 */
+        height: 80px;
+        padding: 0 20px;
+        /* ボタン内の文字が適切な間隔で配置されるように余白を設定 */
+        background-color: #ffffff;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 10px;
+        /* ボタン間に余白を追加 */
+}
+/* 休憩入・休憩戻ボタンのスタイル */
+.break-button {
+    background-color: #FFFFFF !important;
+    /* 背景を白 */
+    color: #000000 !important;
+
 }
 
 

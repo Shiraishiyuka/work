@@ -98,7 +98,44 @@
                 
 }
 
+/* プルダウンメニューを非表示にする */
+.calendar-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: auto;
+    background: white;
+    border: 2px solid black;
+    z-index: 1000;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    text-align: center;
+}
 
+/* 🔹 クリックでプルダウンを表示 */
+:target {
+    display: block;
+}
+
+/* 閉じるボタン */
+.close-button {
+    display: block;
+    margin-top: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+}
+
+/* プルダウンのデザイン */
+select {
+    padding: 5px;
+    margin: 5px;
+    font-size: 16px;
+}
 
 .attendance {
     width: 100%;
@@ -108,6 +145,15 @@
     margin-top: 3rem;
 }
 
+.line {
+    border: none;
+    border-top: 2px solid #ececef;
+    /* 🔹 黒い1pxの線を表示 */
+    margin: 5px -5px;
+    /* 🔹 上下の余白を調整 */
+    width: 102%;
+    /* 🔹 全幅にする */
+}
 th {
     width: 10%;
     height: 5%;
@@ -119,6 +165,27 @@ td {
     text-align: center;
 }
 
+
+
+/*スタッフ別のみcsv*/
+.export-button {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.csv-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.csv-button:hover {
+    background-color: #0056b3;
+}
 
 
 /* レスポンシブ対応 */

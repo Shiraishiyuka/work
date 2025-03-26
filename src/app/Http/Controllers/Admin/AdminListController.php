@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+/*use App\Http\Controllers\Controller;*/
 use App\Http\Controllers\AdminBaseController;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+/*use Illuminate\Support\Facades\Auth;*/
 
 
 class AdminListController extends AdminBaseController

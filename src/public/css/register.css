@@ -23,7 +23,6 @@
 /* ラベル */
 label {
     font-size: 0.8rem;
-    height: auto;
     font-weight: bold;
 }
 
@@ -43,8 +42,8 @@ label {
 .form_error {
     font-size: 0.75rem;
     color: #ff0000;
-    width: 100%;
-    height: 20px;
+    min-height: 1.2rem;
+    margin-top: 0.25rem;
 }
 
 /* ボタン */
@@ -88,7 +87,7 @@ label {
     }
 
     .button-submit {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 }
 
@@ -100,7 +99,7 @@ label {
     }
 
     .button-submit {
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 }
 

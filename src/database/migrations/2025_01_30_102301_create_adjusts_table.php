@@ -17,16 +17,15 @@ class CreateAdjustsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('attendance_id'); 
             $table->unsignedBigInteger('user_id');
+            $table->date('date')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->time('break_start_time')->nullable();
             $table->time('break_end_time')->nullable();
             $table->integer('break_minutes')->default(0);
+            $table->integer('work_minutes')->default(0);
             $table->text('remarks')->nullable();
-            $table->date('date')->nullable();
-            $table->date('original_date')->nullable();
-            $table->enum('status', ['pending', 'approved'])->default('pending'); 
-            $table->boolean('application')->default(false);
+            $table->enum('status', ['pending', 'approved'])->default('pending'); // ✅ 修正申請のステータスを管理
             $table->timestamps();
 
             // 外部キー制約

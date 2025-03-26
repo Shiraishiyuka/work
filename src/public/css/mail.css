@@ -1,0 +1,49 @@
+.container {
+    width: 70%;
+    height: 100vh;  /* 🔹 画面全体の高さを確保 */
+    margin: 0 auto;  /* 🔹 左右中央 */
+    display: flex;  /* 🔹 フレックスボックスを適用 */
+    flex-direction: column;  /* 🔹 要素を縦方向に配置 */
+    justify-content: center;  /* 🔹 垂直方向に中央配置 */
+    align-items: center;  /* 🔹 水平方向にも中央配置 */
+    text-align: center;
+}
+
+p{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+
+
+
+.certification-button {
+    margin-top: 3rem;
+    width: 70%;
+}
+
+.certification {
+    width: 30%;
+    height: 3rem;
+    font-size: 1.3rem;
+    background-color: #b5b5b59c;
+    color: #000000;
+    border: 2px solid #000000;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+/* 戻るボタン */
+.resend-bottom {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.resend {
+    border: none;
+    color: #0073cc;
+    font-size: 0.8rem;
+    background: none;
+    cursor: pointer;
+}

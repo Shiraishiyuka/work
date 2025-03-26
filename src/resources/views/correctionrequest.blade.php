@@ -46,7 +46,7 @@
                          {{ $adjust->status === 'approved' ? '承認済み' : '承認待ち' }}
                     </td>
                     <td>{{ $adjust->user->name }}</td>
-                    <td>{{ $adjust->original_date }}  {{ $adjust->date }}</td> 
+                    <td>{{ $adjust->date->format('Y/m/d') }}</td> 
                     <td>{{ $adjust->remarks }}</td>
                     <td>{{ $adjust->created_at->format('Y/m/d') }}</td>
                     <td>

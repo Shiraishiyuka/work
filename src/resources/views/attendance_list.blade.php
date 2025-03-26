@@ -29,14 +29,37 @@
     </a>
 </div>
 
-<!-- カレンダー表示 -->
+<!-- カレンダー画像（クリックでプルダウンメニューを表示） -->
 <div class="calendar">
     <div class="calendar_image">
-        <a href="{{ route('attendance.list', ['year' => $year, 'month' => $month]) }}">
+        <a href="#calendar-dropdown">  
             <img src="{{ asset('storage/images/download-1.png') }}" class="download" alt="カレンダー">
         </a>
     </div>
     <div class="calendar_text">{{ sprintf('%04d/%02d', $year, $month) }}</div>
+</div>
+
+<!-- 🔹 年月を選択するプルダウンメニュー -->
+<div id="calendar-dropdown" class="calendar-popup">
+    <form action="{{ route('attendance.list') }}" method="get">
+        <label for="year">年：</label>
+        <select name="year" id="year">
+            @for ($y = date('Y') - 5; $y <= date('Y') + 5; $y++)
+                <option value="{{ $y }}" {{ $y == $year ? 'selected' : '' }}>{{ $y }}年</option>
+            @endfor
+        </select>
+
+        <label for="month">月：</label>
+        <select name="month" id="month">
+            @for ($m = 1; $m <= 12; $m++)
+                <option value="{{ $m }}" {{ $m == $month ? 'selected' : '' }}>{{ $m }}月</option>
+            @endfor
+        </select>
+
+        <button type="submit">表示</button>
+    </form>
+
+    <a href="#" class="close-button">×</a>  <!-- 🔹 閉じるボタン -->
 </div>
 
 <!-- 次月ボタン -->
@@ -61,21 +84,25 @@
                     <th>詳細</th>
                 </tr>
                 @foreach ($attendances as $attendance)
-                <tr>
-                    <td>{{ $attendance->date }}</td>
-                    <td>{{ $attendance->start_time }}</td>
-                    <td>{{ $attendance->end_time ?? '-' }}</td>
-                    <td>{{ floor($attendance->break_minutes / 60) }}時間{{ $attendance->break_minutes % 60 }}分</td>
-                    <td>{{ floor($attendance->work_minutes / 60) }}時間{{ $attendance->work_minutes % 60 }}分</td>
-                    <td>
-                        @if (!empty($attendance->id))
-        <a href="{{ route('attendancedetail', ['id' => $attendance->id]) }}">詳細</a>
-    @else
-        <span>詳細なし</span>
+    <tr>
+        <td>{{ $attendance->date }}</td>
+        <td>{{ $attendance->start_time }}</td>
+        <td>{{ $attendance->end_time ?? '-' }}</td>
+        <td>{{ floor($attendance->break_minutes / 60) }}時間{{ $attendance->break_minutes % 60 }}分</td>
+        <td>{{ floor($attendance->work_minutes / 60) }}時間{{ $attendance->work_minutes % 60 }}分</td>
+        <td>
+            @if (!empty($attendance->id))
+                <a href="{{ route('attendancedetail', ['id' => $attendance->id]) }}">詳細</a>
+            @else
+                <span>詳細なし</span>
+            @endif
+        </td>
+    </tr>
+    @if (!$loop->last)  <!-- 🔹 最後の行でなければ下線を表示 -->
+        <tr><td colspan="6"><hr class="line"></td></tr>
     @endif
-                    </td>
-                </tr>
-                @endforeach
+@endforeach
+
             </table>
         </div>
         

@@ -1,11 +1,11 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/login.css') }}" />
 @endsection
 
 @section('content')
-<form class="login_form" action="{{ route('attendance.show') }}" method="post">
+<form class="login_form" action="{{ route('admin.authenticate') }}" method="post">
     @csrf
     <h1 class="login-title">管理者ログイン</h1>
     <div class="login-content">

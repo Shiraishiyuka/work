@@ -12,15 +12,15 @@ class Adjust extends Model
     protected $fillable = [
         'attendance_id',
         'user_id',
-        'original_date', // 修正前の日付
         'date',          // 修正後の日付
         'start_time',
         'end_time',
         'break_start_time',
         'break_end_time',
         'break_minutes',
+        'work_minutes',
         'remarks',
-        'application',
+        'status',
     ];
 
     public function user()
@@ -32,4 +32,9 @@ class Adjust extends Model
     {
         return $this->belongsTo(Attendance::class);
     }
+
+    protected $casts = [
+        'date' => 'date', // ✅ これで `Carbon` インスタンスとして扱える
+        'created_at' => 'datetime',
+    ];
 }

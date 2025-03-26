@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ApplicationRequestController;
 use App\Http\Controllers\Admin\AdminAttendanceController;
 use App\Http\Controllers\Admin\ByStaffListController;
 use App\Http\Controllers\Admin\ApplicationApprovalController;
+use App\Http\Controllers\TwoFactorAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +27,17 @@ use App\Http\Controllers\Admin\ApplicationApprovalController;
 |
 */
 
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.show');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register.form');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
+Route::get('/two-factor-auth', [TwoFactorAuthController::class, 'showForm'])->name('two-factor.form');
+Route::get('/two-factor', [TwoFactorAuthController::class, 'mail'])->name('mail');
+Route::get('/two-factor-auth/verify', [TwoFactorAuthController::class, 'verify'])->name('two-factor.verify');
+Route::post('/two-factor-auth/resend', [TwoFactorAuthController::class, 'resend'])->name('two-factor.resend');
 
 Route::match(['get', 'post'], '/attendance', [AttendanceController::class, 'show'])->name('attendance.show');
 Route::post('/attendance/start', [AttendanceController::class, 'startWork'])->name('attendance.startWork');
@@ -66,11 +72,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/staff/list', [StaffListController::class, 'staff_list'])->name('admin.staff_list');
 
     Route::get('/admin/attendance/staff/{id}', [ByStaffListController::class, 'by_staff'])->name('by_staff');
+    Route::get('/admin/by-staff/{id}/csv', [ByStaffListController::class, 'exportCsv'])
+    ->name('by_staff.csv');
 
     //申請一覧
     Route::get('/stamp_correction_request/list', [ApplicationRequestController::class, 'application_request'])->name('admin.application_request');
 
-
+    //ルート修正
     Route::match(['get', 'post'], '/attendancedetaillist/{id}', [AdminAttendanceController::class, 'admin_attendance'])->name('admin_attendance');
     Route::post('/attendancedetaillist/{id}/update', [AdminAttendanceController::class, 'update_attendance'])->name('admin.update');
 

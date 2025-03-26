@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+/*use Illuminate\Http\Request;*/
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +11,7 @@ class RegisterController extends Controller
 {
     public function showRegisterForm()
     {
-        return view('auth.register'); // 登録フォームを表示
+        return view('auth.register'); 
     }
 
 

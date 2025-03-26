@@ -12,21 +12,24 @@ class AttendanceController extends BaseController
 {
    public function show(Request $request)
 {
-    // Carbon のロケールを日本語に設定
-    \Carbon\Carbon::setLocale('ja');
-
-
-    // リダイレクト処理を呼び出し
+    // リダイレクト処理
     $redirect = $this->handleRedirects($request);
     if ($redirect) {
         return $redirect;
     }
 
-    // セッションに初期値を設定（存在しない場合のみ）
-    if (!session()->has('attendance_status')) {
+    // Carbon のロケールを日本語に設定
+    Carbon::setLocale('ja');
+
+    // 最新の勤怠データを取得
+    $attendance = \App\Models\Attendance::where('user_id', auth()->id())
+                                        ->whereDate('date', Carbon::now()->format('Y-m-d'))
+                                        ->first();
+
+    // ✅ 勤怠データがない場合、セッションを `not_working` にする（初回ログイン対応）
+    if (!$attendance) {
         session(['attendance_status' => 'not_working']);
     }
-
 
     // 現在の時刻を取得
     $currentDateTime = Carbon::now();
@@ -65,10 +68,10 @@ class AttendanceController extends BaseController
                                         ->whereDate('date', Carbon::now()->format('Y-m-d'))
                                         ->first();
 
-    if ($attendance) {
-        $attendance->break_start_time = Carbon::now()->format('H:i:s'); // 休憩開始時間を保存
-        $attendance->save();
-    }
+    if (!$attendance->break_start_time) { // 休憩中でない場合のみセット
+    $attendance->break_start_time = Carbon::now()->format('H:i:s');
+    $attendance->save();
+}
 
     return redirect()->route('attendance.show');
 }
