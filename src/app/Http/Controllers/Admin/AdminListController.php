@@ -15,7 +15,7 @@ class AdminListController extends AdminBaseController
     public function admin_list(Request $request)
     {
 
-        // リダイレクト処理を呼び出し
+
     $redirect = $this->handleRedirects($request);
     if ($redirect) {
         return $redirect;
@@ -35,7 +35,7 @@ class AdminListController extends AdminBaseController
 
         // **この日付の勤怠データのみ取得**
         $attendances = Attendance::with('user') 
-            ->whereDate('date', $currentDate) // ✅ `whereDate()` で指定日のデータ取得
+            ->whereDate('date', $currentDate) // 
             ->orderBy('start_time', 'asc')
             ->get();
 

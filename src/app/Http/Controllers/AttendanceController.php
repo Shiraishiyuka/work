@@ -102,28 +102,29 @@ class AttendanceController extends BaseController
 }
 
 
-    public function endWork(Request $request)
+public function endWork(Request $request)
 {
-    // 退勤ボタンを押したときの処理
     session(['attendance_status' => 'finished']);
 
-    // 出勤中の勤怠データを取得
     $attendance = \App\Models\Attendance::where('user_id', auth()->id())
                                         ->whereDate('date', Carbon::now()->format('Y-m-d'))
                                         ->first();
 
-    // 退勤時刻を保存
     $endTime = Carbon::now();
-    $attendance->end_time = $endTime->format('H:i:s');
+    $attendance->end_time = $endTime;
 
-    // 勤務時間を計算（分単位）
-    $startTime = Carbon::createFromFormat('H:i:s', $attendance->start_time);
+    // ✅ Carbonのまま使用（変換不要）
+    $startTime = $attendance->start_time;
+
+    // ✅ 勤務時間 = 出勤〜退勤 の差 - 休憩
     $workMinutes = $startTime->diffInMinutes($endTime) - $attendance->break_minutes;
 
-    // 勤務の合計時間を保存
-    $attendance->work_minutes = $workMinutes;
+    // ✅ マイナスのときは 0 に補正
+    $attendance->work_minutes = max(0, $workMinutes);
+
     $attendance->save();
 
     return redirect()->route('attendance.show');
 }
+
 }

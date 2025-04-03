@@ -50,21 +50,21 @@
                     </div>
                 </form>
             @elseif($status === 'working')
-                <!-- 休憩入ボタンと退勤ボタン -->
-                <div class="word-processing_group">
-                    <form method="POST" action="{{ route('attendance.takeBreak') }}">
-                        @csrf
-                        <div class="break-processing">
-                            <button type="submit" class="word-processing_text break-button">休憩入</button>
-                        </div>
-                    </form>
-                    <form method="POST" action="{{ route('attendance.endWork') }}">
-                        @csrf
-                        <div class="word-processing">
-                            <button type="submit" class="word-processing_text">退勤</button>
-                        </div>
-                    </form>
+                <!-- 退勤ボタンと休憩入ボタン -->
+            <div class="word-processing_group">
+                <form method="POST" action="{{ route('attendance.endWork') }}">
+                @csrf
+                <div class="word-processing">
+                    <button type="submit" class="word-processing_text">退勤</button>
                 </div>
+                </form>
+                <form method="POST" action="{{ route('attendance.takeBreak') }}">
+                @csrf
+            <div class="break-processing">
+                <button type="submit" class="word-processing_text break-button">休憩入</button>
+            </div>
+            </form>
+        </div>
             @elseif($status === 'on_break')
                 <!-- 休憩戻ボタン -->
                 <form method="POST" action="{{ route('attendance.endBreak') }}">

@@ -16,6 +16,7 @@
 
 }
 
+
 .title-space {
     width: 100%;
     height: 10%;
@@ -37,8 +38,57 @@
     color: #000000;
 }
 
+.previous-month_link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.later-month_link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* 画像と文字の間隔 */
+    text-decoration: none;
+}
+
+.indicate {
+    width: 100%;
+    height: 60px;
+    /* 適切な高さを指定 */
+    display: flex;
+    justify-content: center;
+    /* 中央寄せ */
+    align-items: center;
+    /* 垂直中央揃え */
+    gap: 40px;
+    /* 要素同士の間隔 */
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+/* 前月・翌月共通のリンク整列 */
+.previous-month_link,
+.later-month_link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+/* カレンダーも中央に整列するよう修正 */
+.calendar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .previous-month,
-.later-month {
+.later-month,
+.previous-day,
+.next-day{
     display: flex;
     /* 子要素を横並びにする */
     align-items: center;
@@ -154,17 +204,53 @@ select {
     width: 102%;
     /* 🔹 全幅にする */
 }
-th {
-    width: 10%;
-    height: 5%;
+.with-top-border {
+    border-top: 1px solid #ccc;
+    padding: 0.5rem;
 }
 
-td {
-    width: 10%;
-    height: 5%;
+.attendance-record th,
+.attendance-record td {
+    width: 16.6%;
+    /* 100% ÷ 6列 */
     text-align: center;
+    padding: 10px;
+    vertical-align: middle;
+    font-size: 16px;
+    /* 必要なら調整 */
 }
 
+.attendance-record {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.attendance-record td {
+    white-space: nowrap;
+    /* 折り返さず横スクロールにする */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* 長すぎる場合は...に */
+}
+
+/* 詳細リンクのデフォルトスタイルを削除 */
+.attendance-record a {
+    color: inherit;
+    /* 親要素の文字色を継承 */
+    text-decoration: none;
+    /* 下線を消す */
+    font-weight: normal;
+    /* 必要に応じてフォントウェイト調整 */
+}
+
+/* クリック後（visited）やホバー時の色も継承させる */
+.attendance-record a:visited,
+.attendance-record a:hover,
+.attendance-record a:active {
+    color: inherit;
+    text-decoration: none;
+}
 
 
 /*スタッフ別のみcsv*/

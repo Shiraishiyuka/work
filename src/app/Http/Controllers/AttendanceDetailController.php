@@ -7,7 +7,7 @@ use App\Models\Attendance;
 use App\Models\Adjust;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AttendanceRequest;
-/*use App\Http\Controllers\BaseController;*/
+use App\Http\Controllers\BaseController;
 
 class AttendanceDetailController extends BaseController
 {

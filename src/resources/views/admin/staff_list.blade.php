@@ -27,12 +27,12 @@
                 <th>月次勤怠</th>
             </tr>
             @foreach ($users as $user)
-            <tr>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                <td><a href="{{ route('by_staff', ['id' => $user->id]) }}">詳細</a></td>
-            </tr>
-            @endforeach
+<tr>
+    <td class="with-top-border">{{ $user->name }}</td>
+    <td class="with-top-border">{{ $user->email }}</td>
+    <td class="with-top-border"><a href="{{ route('by_staff', ['id' => $user->id]) }}">詳細</a></td>
+</tr>
+@endforeach
         </table>
     </div>
     </div>
