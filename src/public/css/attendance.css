@@ -63,62 +63,50 @@
     height: 80px;
     gap: 2rem;
     display: flex;
-        align-items: center;
-        justify-content: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .text-good_job {
     font-size: 32px;
-        font-weight: 700;
-        color: #000000;
-        /* 白文字を設定 */
-        text-align: center;
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+}
+
+.word-processing,
+.break-processing {
+    width: auto;
+    height: 80px;
+    padding: 0 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
 }
 
 .word-processing {
-    width: auto;
-        /* 固定幅ではなく自動幅に変更 */
-        height: 80px;
-        padding: 0 20px;
-        /* ボタン内の文字が適切な間隔で配置されるように余白を設定 */
-        background-color: #000000;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 10px;
-        /* ボタン間に余白を追加 */
+    background-color: #000000;
+}
+
+.break-processing {
+    background-color: #ffffff;
 }
 
 
 .word-processing_text {
-            font-size: 32px;
-            font-weight: 700;
-            background-color: #000;
-                /* 背景色を黒に設定 */
-            color: #FFFFFF;
-            /* 白文字を設定 */
-            text-align: center;
+        font-size: 32px;
+        font-weight: 700;
+        background-color: #000;
+        color: #FFFFFF;
+        text-align: center;
 }
 
-.break-processing {
-    width: auto;
-        /* 固定幅ではなく自動幅に変更 */
-        height: 80px;
-        padding: 0 20px;
-        /* ボタン内の文字が適切な間隔で配置されるように余白を設定 */
-        background-color: #ffffff;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 10px;
-        /* ボタン間に余白を追加 */
-}
-/* 休憩入・休憩戻ボタンのスタイル */
+
+
 .break-button {
     background-color: #FFFFFF !important;
-    /* 背景を白 */
     color: #000000 !important;
 
 }
@@ -126,15 +114,10 @@
 
 button {
     border: none;
-    /* 枠線を削除 */
     background: none;
-    /* 背景を削除 */
     padding: 0;
-    /* 余白を削除 */
     margin: 0;
-    /* マージンを削除 */
     outline: none;
-    /* フォーカス時の青い枠を削除 */
 }
 
 

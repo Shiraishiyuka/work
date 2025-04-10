@@ -84,28 +84,26 @@
             <th>詳細</th>
         </tr>
         @foreach ($attendances as $attendance)
-        <tr>
-            <td>{{ \Carbon\Carbon::parse($attendance->date)->format('m/d（D）') }}</td>
-            <td>{{ $attendance->start_time ? \Carbon\Carbon::parse($attendance->start_time)->format('H:i') : '-' }}</td>
-            <td>{{ $attendance->end_time ? \Carbon\Carbon::parse($attendance->end_time)->format('H:i') : '-' }}</td>
-            <td>
-                {{ sprintf('%02d:%02d', floor($attendance->break_minutes / 60), $attendance->break_minutes % 60) }}
-            </td>
-            <td>
-                {{ sprintf('%02d:%02d', floor($attendance->work_minutes / 60), $attendance->work_minutes % 60) }}
-            </td>
-            <td>
-                @if (!empty($attendance->id))
-                    <a href="{{ route('attendancedetail', ['id' => $attendance->id]) }}">詳細</a>
-                @else
-                    <span>詳細なし</span>
-                @endif
-            </td>
-        </tr>
-        @if (!$loop->last)
-        <tr><td colspan="6"><hr class="line"></td></tr>
-        @endif
-        @endforeach
+    <tr></tr>
+    <tr>
+        <td>{{ \Carbon\Carbon::parse($attendance->date)->translatedFormat('m/d（D）') }}</td>
+        <td>{{ $attendance->start_time ? \Carbon\Carbon::parse($attendance->start_time)->format('H:i') : '-' }}</td>
+        <td>{{ $attendance->end_time ? \Carbon\Carbon::parse($attendance->end_time)->format('H:i') : '-' }}</td>
+        <td>
+            {{ sprintf('%02d:%02d', floor($attendance->calculated_break_minutes / 60), $attendance->calculated_break_minutes % 60) }}
+        </td>
+        <td>
+            {{ sprintf('%02d:%02d', floor(($attendance->work_minutes ?? 0) / 60), ($attendance->work_minutes ?? 0) % 60) }}
+        </td>
+        <td>
+            @if (!empty($attendance->id))
+                <a href="{{ route('attendancedetail', ['id' => $attendance->id]) }}">詳細</a>
+            @else
+                <span>詳細なし</span>
+            @endif
+        </td>
+    </tr>
+@endforeach
     </table>
 </div>
         

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use App\Mail\TwoFactorAuthMail;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log; // 追加
+use Illuminate\Support\Facades\Log;
 
 class TwoFactorAuthController extends Controller
 {

@@ -34,7 +34,12 @@ class Adjust extends Model
     }
 
     protected $casts = [
-        'date' => 'date', // ✅ これで `Carbon` インスタンスとして扱える
+        'date' => 'date',
         'created_at' => 'datetime',
     ];
+
+public function breakTimes()
+{
+    return $this->hasMany(\App\Models\BreakTime::class, 'adjust_id');
+}
 }

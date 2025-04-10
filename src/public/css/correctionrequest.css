@@ -19,15 +19,6 @@
 }
 
 
-.title-space {
-    width: 100%;
-    height: 10%;
-    display: flex;
-    align-items: center;
-    margin-top: 2rem;
-    margin-bottom: 3rem;
-}
-
 
 
 .title-line {
@@ -89,8 +80,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-bottom: 20px;
-    /* タイトルと次の要素の間に余白を作る */
+    margin: 2rem 0;
 }
 
 .title-line {
@@ -105,15 +95,14 @@
     color: #000000;
 }
 
+
 .previous-month,
 .later-month {
     display: flex;
-    /* 子要素を横並びにする */
     align-items: center;
-    /* 垂直方向に中央揃え */
     gap: 10px;
-    /* 画像とテキストの間に余白を追加 */
 }
+
 
 .previous-month_image,
 .later-month_image {
@@ -130,8 +119,9 @@
 }
 
 /* ボタンの間隔調整 */
-.previous-month,
-.next-month {
+/*.next-month*/
+.previous-month
+ {
     display: flex;
     align-items: center;
     gap: 10px;

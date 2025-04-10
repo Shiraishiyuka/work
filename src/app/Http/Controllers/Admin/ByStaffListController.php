@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-/*use App\Http\Controllers\Controller;*/
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\User;
 use Carbon\Carbon;
-/*use Illuminate\Support\Facades\Auth;*/
 use App\Http\Controllers\BaseController;
 
 
@@ -16,16 +14,16 @@ class ByStaffListController extends BaseController
     
     public function by_staff(Request $request, $id, $year = null, $month = null){
 
-        // リダイレクト処理を呼び出し
+
     $redirect = $this->handleRedirects($request);
     if ($redirect) {
         return $redirect;
     }
 
         if (!$id) {
-        abort(404); // `id` がない場合は404エラー
+        abort(404);
         }
-        // 指定された `id` のユーザーを取得
+
     $user = User::findOrFail($id);
 
     // URLの `year` と `month` のパラメータを取得し、デフォルトを設定

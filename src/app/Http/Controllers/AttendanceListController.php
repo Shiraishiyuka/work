@@ -12,11 +12,13 @@ class AttendanceListController extends BaseController
 {
     public function attendance_list(Request $request, $year = null, $month = null)
     {
-        // URLの `year` と `month` のパラメータを取得し、デフォルトを設定
+        Carbon::setLocale('ja');
+
+
         $year = $request->query('year', $year ?? Carbon::today()->year);
         $month = $request->query('month', $month ?? Carbon::today()->month);
 
-        // **Carbon インスタンスに変換**
+
         $currentDate = Carbon::createFromDate($year, $month, 1);
 
         // **前月・次月を計算**
@@ -25,8 +27,8 @@ class AttendanceListController extends BaseController
 
         // **指定した月の勤怠データを取得**
         $attendances = Attendance::where('user_id', Auth::id())
-            ->whereYear('date', $year)  // ✅ 年でフィルタリング
-            ->whereMonth('date', $month) // ✅ 月でフィルタリング
+            ->whereYear('date', $year)
+            ->whereMonth('date', $month)
             ->orderBy('date', 'asc')
             ->get();
 

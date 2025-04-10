@@ -11,8 +11,8 @@
 
 
 @section('content')
-<div class="correction_screen">
-    <div class="correction_screen_inner">
+<div class="attendance-list_screen">
+    <div class="attendance-list_screen_inner">
         <div class="title-space">
             <div class="title-line"></div>
             <span class="title-text">申請一覧2</span>

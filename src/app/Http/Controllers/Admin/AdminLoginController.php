@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
-/*use App\Models\User;*/
 use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
@@ -22,9 +21,8 @@ class AdminLoginController extends Controller
             'password' => ['required'],
         ]);
 
-        /* $credentials = $request->only('email', 'password');*/
 
-        // 管理者のみログインできるようにする
+
         if (Auth::attempt(array_merge($credentials, ['is_admin' => true]))) {
             $request->session()->regenerate();
             return redirect()->route('admin.attendance.list');

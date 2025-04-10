@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-/*use App\Http\Controllers\Controller;*/
 use Illuminate\Http\Request;
 use App\Models\Adjust;
 use Carbon\Carbon;
@@ -13,18 +12,17 @@ class ApplicationRequestController extends AdminBaseController
 {
     public function application_request(Request $request, $year = null, $month = null){
 
-        // リダイレクト処理を呼び出し
+    
     $redirect = $this->handleRedirects($request);
     if ($redirect) {
         return $redirect;
     }
 
 
-         // `year` と `month` が null の場合、現在の年月をセット
         $year = $year ?? Carbon::now()->year;
         $month = $month ?? Carbon::now()->month;
 
-        // `Carbon` インスタンスを作成
+
         $currentDate = Carbon::createFromDate($year, $month, 1);
 
         // **前月・次月の計算**

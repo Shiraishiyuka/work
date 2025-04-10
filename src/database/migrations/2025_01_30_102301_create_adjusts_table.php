@@ -20,15 +20,13 @@ class CreateAdjustsTable extends Migration
             $table->date('date')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
-            $table->time('break_start_time')->nullable();
-            $table->time('break_end_time')->nullable();
             $table->integer('break_minutes')->default(0);
             $table->integer('work_minutes')->default(0);
             $table->text('remarks')->nullable();
-            $table->enum('status', ['pending', 'approved'])->default('pending'); // ✅ 修正申請のステータスを管理
+            $table->enum('status', ['pending', 'approved'])->default('pending');
             $table->timestamps();
 
-            // 外部キー制約
+
             $table->foreign('attendance_id')->references('id')->on('attendances')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

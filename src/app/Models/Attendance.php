@@ -27,11 +27,11 @@ class Attendance extends Model
         return $this->belongsTo(User::class);
     }
 
-    // 🔹 休憩時間を計算（複数回対応）
+
     public function calculateBreakMinutes()
 {
     if (!$this->break_start_time || !$this->break_end_time) {
-        return 0; // 休憩が記録されていない場合は 0 分
+        return 0;
     }
 
     $start = Carbon::parse($this->break_start_time);
@@ -44,11 +44,11 @@ class Attendance extends Model
     return $start->diffInMinutes($end);
 }
 
-    // 🔹 実働時間を計算（日付超え対応）
+
     public function calculateWorkMinutes()
 {
     if (!$this->start_time || !$this->end_time) {
-        return 0;  // ✅ 出勤 or 退勤時間がない場合、勤務時間を 0 にする
+        return 0;
     }
 
     $start = Carbon::parse($this->start_time);
@@ -60,5 +60,25 @@ class Attendance extends Model
 
     return $start->diffInMinutes($end) - $this->calculateBreakMinutes();
 }
+
+public function breakTimes()
+{
+    return $this->hasMany(BreakTime::class);
+}
     
+public function getCalculatedBreakMinutesAttribute()
+{
+    return $this->breakTimes
+        ->filter(fn($bt) => $bt->start_time && $bt->end_time)
+        ->reduce(function ($carry, $bt) {
+            $start = \Carbon\Carbon::createFromFormat('H:i:s', $bt->start_time);
+            $end = \Carbon\Carbon::createFromFormat('H:i:s', $bt->end_time);
+
+            if ($end < $start) {
+                $end->addDay();
+            }
+
+            return $carry + $start->diffInMinutes($end);
+        }, 0);
+}
 }

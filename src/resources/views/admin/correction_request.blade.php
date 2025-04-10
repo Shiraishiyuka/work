@@ -18,11 +18,11 @@
         </div>
 
         <div class="approval">
-    <a href="{{ route('correctionrequest', ['status' => 'pending']) }}" 
+    <a href="{{ route('admin.correction_request', ['status' => 'pending']) }}" 
        class="approval_text {{ request('status', 'pending') === 'pending' ? 'active' : '' }}">
        承認待ち
     </a>
-    <a href="{{ route('correctionrequest', ['status' => 'approved']) }}" 
+    <a href="{{ route('admin.correction_request', ['status' => 'approved']) }}" 
        class="approval_text {{ request('status', 'pending') === 'approved' ? 'active' : '' }}">
        承認済み
     </a>
@@ -46,8 +46,11 @@
                     <td>{{ $adjust->date->format('Y/m/d') }}</td> 
                     <td>{{ $adjust->remarks }}</td>
                     <td>{{ $adjust->created_at->format('Y/m/d') }}</td>
-                    <td><a href="{{ route('approval', ['attendance_correct_request' => $adjust->id]) }}" class="plain-link">詳細</a></td>
+                    <td><a href="{{ route('approval', ['id' => $adjust->id]) }}" class="plain-link">詳細</a>
+                    
+</td>
                 </tr>
+                
                 @endforeach
             </table>
         </div>

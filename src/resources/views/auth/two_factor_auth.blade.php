@@ -12,7 +12,7 @@
     <div class="certification-button">
         <form action="{{ route('mail') }}" method="get">
         @csrf
-        <button class="certification" type="submit">認証はこちら</button>
+        <button class="certification" type="submit">認証はこちらから</button>
         </form>
     </div>
 

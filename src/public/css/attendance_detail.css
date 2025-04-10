@@ -6,12 +6,13 @@
 
 .attendance-detail_screen_inner {
     width: 60%;
-    height: 90%;
+    height: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 2rem;
 }
 
 .title-space {
@@ -34,60 +35,49 @@
     color: #000000;
 }
 
-.update-form {
+/*.update-form {
     width: 100%;
     height: 200px;
-}
+}*/
 
 .attendance-detail_data-table th,
 .attendance-detail_data-table td {
-    width:100%;
-    border-bottom: 1px solid #ccc;
     padding: 10px;
     text-align: left;
     vertical-align: middle;
 }
 
-
-.attendance-detail_textarea {
-    width: 100%;
-    height: 80px;
-    font-size: 16px;
+/* 行ごとに線を入れる → 最後の行には線を入れない */
+.attendance-detail_data-table tr {
+    border-bottom: 1px solid #ccc;
 }
+
+/* 最後の行の線を非表示 */
+.attendance-detail_data-table tr:last-child {
+    border-bottom: none;
+}
+
+
 .attendance-detail_table {
     width: 100%;
-    height: 75%;
-    margin: 1.5rem auto;
+    height: 60%;
+    margin: 1rem auto;
     background-color: #ffffff;
     padding-left: 2.2rem;
     padding-top: 1rem;
+    gap: 2rem;
 
 }
 
-.attendance-detail_textarea {
-    font-size: 16px;
-        font-weight: 700;
-        color: #737373;
-        width: 130px;
-}
-.attendance-detail_row {
-    display: flex;
-    justify-content: space-between;
-    /* 要素間の間隔を均等に配置 */
-    align-items: center;
-    /* 縦方向の中央揃え */
-    gap: 85px;
-    /* 各項目の間隔を設定 */
-    width: 100%;
-    height: 3rem;
-    padding: 10px 0;
-}
+
+
 
 .attendance-detail_text {
     font-size: 16px;
     font-weight: 700;
     color: #737373;
 }
+
 
 .attendance-detail_text,
 .attendance-detail_form-text {
@@ -97,20 +87,24 @@
     /* 幅が極端に狭くならないように制限 */
 }
 
+
+
+.attendance-detail_input+.attendance-detail_input {
+    margin-left: 60px;
+    /* 🔄 ← 「〜」の後に空白 */
+}
+.attendance-detail_input:first-of-type {
+    margin-right: 60px;
+    /* ← ここがポイントです */
+}
+
 .attendance-detail_form-text input,
 .attendance-detail_form-text select {
     width: 80%;
-    /* 親要素に合わせる */
-    padding: 8px;
     font-size: 16px;
 }
 
-.attendance-detail_form-text textarea {
-    width: 100%;
-        /* 親要素に合わせる */
 
-        font-size: 16px;
-}
 
 .attendance-detail_form-text {
     font-size: 16px;
@@ -135,31 +129,47 @@
     /* 🔹 入力欄のすぐ下に配置 */
 }
 
-✅ エラー
 
 
 /* ボタン */
 .button-group {
     width: 100%;
-    height: auto;
+    margin-top: 1rem;
+    text-align: right;
 
 }
 .button {
     margin-top: 4rem;
-    width: 20%;
+    width: 100%;
 }
 
 .button-submit {
-    width: 100%;
-    height: 2rem;
-    font-size: 1.3rem;
-    background-color: #000000;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 0.1875rem;
-    cursor: pointer;
+    width: 20%;
+        height: 3rem;
+        font-size: 1.3rem;
+        background-color: #000000;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 0.1875rem;
 }
 
+/*
+.export-button {
+    width: 100%;
+    text-align: right;
+    margin: 2rem;
+}
+
+.csv-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #000000;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+    */
 
 p {
     width: 100%;
@@ -180,28 +190,24 @@ p {
     color: #737373;
 }
 
-/* テーブルの各行の下に仕切り線を追加 */
-.attendance-detail_row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 85px;
-    width: 90%;
-    padding: 10px 0;
-    border-bottom: 1px solid #ccc;
-    /* 仕切り線を追加 */
-}
+
 
 .attendance-detail_row:last-child {
     border-bottom: none;
     /* 最後の行には線をつけない */
 }
 
-/* 名前の項目を左揃えにする */
-.attendance-detail_form-text {
-    text-align: left;
-    /* 左揃え */
+.attendance-detail_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    gap: 20px;
 }
+
+
 
 
 /* 承認待ちメッセージを右揃えにする */
@@ -220,17 +226,7 @@ p {
 }
 
 
-.attendance-detail_row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    /* ← 🔄 90% → 100% に変更して端から端まで使う */
-    padding: 10px 0;
-    border-bottom: 1px solid #ccc;
-    gap: 20px;
-    /* ← 🔄 間隔を少し小さくしてバランス調整 */
-}
+
 
 .attendance-detail_row:last-child {
     border-bottom: none;
@@ -261,17 +257,45 @@ p {
     font-size: 16px;
 }
 
-/* テキストエリア */
-.attendance-detail_form-text textarea {
-    width: 100%;
-    font-size: 16px;
-}
-
-.attendance-detail_table form {
+.attendance-detail_table {
     margin: 0;
     padding: 0;
     border: none;
-    background: none;
+    background-color: white;
+}
+
+.attendance-detail_data-table {
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.attendance-detail_data-table th {
+    width: 100px;
+    text-align: left;
+    vertical-align: top;
+    padding: 10px 15px;
+    white-space: nowrap;
+}
+
+.attendance-detail_data-table td {
+    padding: 10px 15px;
+    vertical-align: top;
+}
+
+.attendance-detail_input {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.attendance-detail_textarea {
+    width: 68%;
+    height: 70px;
+}
+
+.break-time-row {
+    margin-bottom: 6px;
 }
 
 /* レスポンシブ対応 */

@@ -8,7 +8,6 @@
 .login-title {
     text-align: center;
     font-size: 1.5rem;
-    font-weight: bold;
 }
 
 .login-content {
@@ -31,7 +30,7 @@ label {
 .text {
     width: 100%;
     height: 2.2rem;
-    font-size: 0.8125rem;
+    font-size: 0.8rem;
     border: 1px solid rgb(113, 105, 105);
     border-radius: 0.1875rem;
     padding: 1rem;

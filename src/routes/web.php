@@ -50,7 +50,7 @@ Route::get('/attendance_list/{year?}/{month?}', [AttendanceListController::class
     ->name('attendance.list');
 Route::get('/attendance_list', [AttendanceListController::class, 'attendance_list'])->name('attendance_list');
 
-Route::get('/correctionrequest', [CorrectionRequestController::class, 'correctionrequest'])->name('correctionrequest');
+Route::get('/stamp_correctionrequest/list', [CorrectionRequestController::class, 'correctionrequest'])->name('correctionrequest');
 
 
 Route::get('/attendancedetail/{id}', [AttendanceDetailController::class, 'attendancedetail'])->name('attendancedetail');
@@ -83,7 +83,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/attendancedetaillist/{id}/update', [AdminAttendanceController::class, 'update_attendance'])->name('admin.update');
 
 
-    Route::match(['get', 'post'],'/stamp_correction_request/approve/{attendance_correct_request}', [ApplicationApprovalController::class, 'approval'])->name('approval');
+    Route::get('/stamp_correction_request/approve/{id}', [ApplicationApprovalController::class, 'approval'])->name('approval');
+
     Route::post('/admin/application/approve/{id}', [ApplicationApprovalController::class, 'approve'])
     ->name('admin.application.approve');
 });

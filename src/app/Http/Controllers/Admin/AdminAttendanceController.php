@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-/*use App\Http\Controllers\Controller;*/
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\Adjust;
@@ -44,8 +43,7 @@ class AdminAttendanceController extends AdminBaseController
     return view('admin.admin_attendance', compact('attendance', 'adjust', 'hasPendingApproval', 'break_minutes'));
 }
 
-    
-     public function update_attendance(AttendanceRequest $request, $id)
+    public function update_attendance(AttendanceRequest $request, $id)
     {
         // 勤怠データを取得（元の日付を取得）
         $attendance = Attendance::findOrFail($id);
@@ -53,7 +51,7 @@ class AdminAttendanceController extends AdminBaseController
         // `date` カラムに適切な値をセット（修正前の勤怠データの日付を利用）
         $fullDate = sprintf('%04d-%s', $request->year, $request->month_day);
 
-        // 修正データを `adjusts` テーブルに保存（`attendances` テーブルは更新しない）
+
         Adjust::create([
         'attendance_id' => $id,
         'user_id' => auth()->id(),

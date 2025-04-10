@@ -38,38 +38,28 @@
     color: #000000;
 }
 
-.previous-month_link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-}
+
 
 .later-month_link {
     display: flex;
     align-items: center;
     gap: 8px;
-    /* 画像と文字の間隔 */
     text-decoration: none;
 }
 
 .indicate {
     width: 100%;
-    height: 60px;
-    /* 適切な高さを指定 */
+    height: 20%;
     display: flex;
     justify-content: center;
-    /* 中央寄せ */
     align-items: center;
-    /* 垂直中央揃え */
-    gap: 40px;
-    /* 要素同士の間隔 */
+    gap: 220px;
     background-color: #ffffff;
     border-radius: 10px;
     margin-top: 1rem;
 }
 
-/* 前月・翌月共通のリンク整列 */
+
 .previous-month_link,
 .later-month_link {
     display: flex;
@@ -78,36 +68,25 @@
     text-decoration: none;
 }
 
-/* カレンダーも中央に整列するよう修正 */
-.calendar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
+/*.previous-day,.next-day*/
 .previous-month,
-.later-month,
-.previous-day,
-.next-day{
+.later-month
+{
     display: flex;
-    /* 子要素を横並びにする */
     align-items: center;
-    /* 垂直方向に中央揃え */
     gap: 10px;
-    /* 画像とテキストの間に余白を追加 */
 }
 
 .previous-month_image,
 .later-month_image {
     width: 25px;
-        /* 画像のサイズを固定 */
-        height: 25px;
-        object-fit: cover;
+    height: 25px;
+    object-fit: cover;
 }
 
 .images {
     width: 25px;
-        height: 25px;
+    height: 25px;
     opacity: 0.3;
 }
 
@@ -122,8 +101,9 @@
     width: 125px;
     height: 25px;
     display: flex;
-        justify-content: flex-end;
-        align-items: center;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
 }
 
 .download {
@@ -138,15 +118,7 @@
 }
 
 
-.indicate {
-    width: 100%;
-    height: 20%;
-    border-radius: 10px;
-    background-color: #ffffff;
-        display: flex;
-            justify-content: space-between;
-                
-}
+
 
 /* プルダウンメニューを非表示にする */
 .calendar-popup {
@@ -181,11 +153,13 @@
 }
 
 /* プルダウンのデザイン */
+/*
 select {
     padding: 5px;
     margin: 5px;
     font-size: 16px;
 }
+*/
 
 .attendance {
     width: 100%;
@@ -195,20 +169,15 @@ select {
     margin-top: 3rem;
 }
 
-.line {
-    border: none;
-    border-top: 2px solid #ececef;
-    /* 🔹 黒い1pxの線を表示 */
-    margin: 5px -5px;
-    /* 🔹 上下の余白を調整 */
-    width: 102%;
-    /* 🔹 全幅にする */
-}
-.with-top-border {
+/*.with-top-border {
     border-top: 1px solid #ccc;
     padding: 0.5rem;
 }
+*/
 
+.attendance-record tr+tr {
+    border-top: 1px solid #ccc;
+}
 .attendance-record th,
 .attendance-record td {
     width: 16.6%;
@@ -255,23 +224,21 @@ select {
 
 /*スタッフ別のみcsv*/
 .export-button {
+    width: 100%;
     text-align: right;
-    margin-bottom: 15px;
+    margin: 2rem;
 }
 
 .csv-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #000000;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     font-size: 16px;
 }
 
-.csv-button:hover {
-    background-color: #0056b3;
-}
 
 
 /* レスポンシブ対応 */

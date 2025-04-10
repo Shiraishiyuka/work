@@ -31,7 +31,7 @@
 
     <!-- ログインボタン -->
     <div class="button">
-        <button class="button-submit">登録する</button>
+        <button class="button-submit">ログインする</button>
     </div>
 </form>
 

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-/*use App\Http\Controllers\Controller;*/
 use App\Http\Controllers\AdminBaseController;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use Carbon\Carbon;
-/*use Illuminate\Support\Facades\Auth;*/
+
 
 
 class AdminListController extends AdminBaseController
@@ -16,13 +15,11 @@ class AdminListController extends AdminBaseController
     {
 
 
-    $redirect = $this->handleRedirects($request);
-    if ($redirect) {
-        return $redirect;
-    }
+        $redirect = $this->handleRedirects($request);
+        if ($redirect) {
+            return $redirect;
+        }
 
-
-    
         // クエリパラメータから `date` を取得し、なければ今日の日付を設定
         $date = $request->query('date', Carbon::today()->toDateString());
 

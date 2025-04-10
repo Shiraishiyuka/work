@@ -5,20 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\BaseController;
-use Illuminate\Support\Facades\Auth; // Auth ファサードを正しくインポート
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\BreakTime;
+
 
 class AttendanceController extends BaseController
 {
    public function show(Request $request)
 {
-    // リダイレクト処理
+
     $redirect = $this->handleRedirects($request);
     if ($redirect) {
         return $redirect;
     }
 
-    // Carbon のロケールを日本語に設定
     Carbon::setLocale('ja');
 
     // 最新の勤怠データを取得
@@ -26,18 +27,18 @@ class AttendanceController extends BaseController
                                         ->whereDate('date', Carbon::now()->format('Y-m-d'))
                                         ->first();
 
-    // ✅ 勤怠データがない場合、セッションを `not_working` にする（初回ログイン対応）
+
     if (!$attendance) {
         session(['attendance_status' => 'not_working']);
     }
 
-    // 現在の時刻を取得
+
     $currentDateTime = Carbon::now();
 
-    // セッションから現在の勤怠状態を取得
+
     $status = session('attendance_status');
 
-    // ビューに変数を渡す
+
     return view('attendance', [
         'currentDateTime' => $currentDateTime,
         'status' => $status
@@ -51,14 +52,14 @@ class AttendanceController extends BaseController
 
     // 出勤時刻を保存
     $attendance = new \App\Models\Attendance();
-    $attendance->user_id = auth()->id(); // ログインユーザーのIDを取得
+    $attendance->user_id = auth()->id();
     $attendance->date = Carbon::now()->format('Y-m-d');
-    $attendance->start_time = Carbon::now()->format('H:i:s');
+    $attendance->start_time = Carbon::now()->format('H:i:s'); 
     $attendance->save();
 
-    // 出勤完了後に勤怠画面へリダイレクト
     return redirect()->route('attendance.show');
 }
+
 
     public function takeBreak(Request $request)
 {
@@ -68,10 +69,11 @@ class AttendanceController extends BaseController
                                         ->whereDate('date', Carbon::now()->format('Y-m-d'))
                                         ->first();
 
-    if (!$attendance->break_start_time) { // 休憩中でない場合のみセット
-    $attendance->break_start_time = Carbon::now()->format('H:i:s');
-    $attendance->save();
-}
+
+    BreakTime::create([
+        'attendance_id' => $attendance->id,
+        'start_time' => Carbon::now()->format('H:i:s'),
+    ]);
 
     return redirect()->route('attendance.show');
 }
@@ -85,21 +87,41 @@ class AttendanceController extends BaseController
                                         ->whereDate('date', Carbon::now()->format('Y-m-d'))
                                         ->first();
 
-    if ($attendance && $attendance->break_start_time) {
-        $breakStartTime = Carbon::createFromFormat('H:i:s', $attendance->break_start_time);
-        $breakEndTime = Carbon::now();
+    // 終了していない最新の休憩を取得
+    $break = $attendance->breakTimes()
+                        ->whereNull('end_time')
+                        ->latest()
+                        ->first();
 
-        // 休憩時間を計算
-        $breakMinutes = $breakStartTime->diffInMinutes($breakEndTime);
+    if ($break) {
+        $start = Carbon::createFromFormat('H:i:s', $break->start_time);
+        $end = Carbon::now();
 
-        // データベースに保存
-        $attendance->break_end_time = $breakEndTime->format('H:i:s');
-        $attendance->break_minutes += $breakMinutes; // 休憩の合計時間を更新
+        $break->end_time = $end->format('H:i:s');
+        $break->save();
+
+        // 合計休憩時間を再計算
+        $totalBreak = $attendance->breakTimes()
+    ->whereNotNull('end_time')
+    ->get()
+    ->reduce(function ($carry, $bt) {
+        $s = Carbon::createFromFormat('H:i:s', $bt->start_time);
+        $e = Carbon::createFromFormat('H:i:s', $bt->end_time);
+
+        if ($e < $s) {
+            $e->addDay();
+        }
+
+        return $carry + $s->diffInMinutes($e);
+    }, 0);
+
+        $attendance->break_minutes = $totalBreak;
         $attendance->save();
     }
 
     return redirect()->route('attendance.show');
 }
+
 
 
 public function endWork(Request $request)
@@ -113,13 +135,27 @@ public function endWork(Request $request)
     $endTime = Carbon::now();
     $attendance->end_time = $endTime;
 
-    // ✅ Carbonのまま使用（変換不要）
-    $startTime = $attendance->start_time;
+    $startTime = Carbon::createFromFormat('H:i:s', $attendance->start_time);
 
-    // ✅ 勤務時間 = 出勤〜退勤 の差 - 休憩
-    $workMinutes = $startTime->diffInMinutes($endTime) - $attendance->break_minutes;
 
-    // ✅ マイナスのときは 0 に補正
+    $totalBreak = $attendance->breakTimes()
+    ->whereNotNull('end_time')
+    ->get()
+    ->reduce(function ($carry, $bt) {
+        $s = Carbon::createFromFormat('H:i:s', $bt->start_time);
+        $e = Carbon::createFromFormat('H:i:s', $bt->end_time);
+
+        if ($e < $s) {
+            $e->addDay(); // ✅ 日またぎ対応
+        }
+
+        return $carry + $s->diffInMinutes($e);
+    }, 0);
+
+    $attendance->break_minutes = $totalBreak;
+
+    // 勤務時間の再計算
+    $workMinutes = $startTime->diffInMinutes($endTime) - $totalBreak;
     $attendance->work_minutes = max(0, $workMinutes);
 
     $attendance->save();

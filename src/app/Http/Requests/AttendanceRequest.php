@@ -26,8 +26,8 @@ class AttendanceRequest extends FormRequest
         return [
             'start_time' => 'required|before:end_time',
             'end_time' => 'required',
-            'break_start_time' => 'before:end_time|before:break_end_time',
-            'break_end_time' => 'after:break_start_time|before:end_time',
+            'break_times.*.start_time' => 'nullable|before:break_times.*.end_time',
+            'break_times.*.end_time' => 'nullable|after:break_times.*.start_time|before:end_time',
             'remarks' => 'required',
         ];
     }
@@ -38,9 +38,9 @@ class AttendanceRequest extends FormRequest
             'start_time.required' => '出勤時間は必須です。',
             'start_time.before' => '出勤時間もしくは退勤時間が不適切な値です',
             'end_time.required' => '退勤時間は必須です。',
-            'break_start_time.before' => '休憩時間が勤務時間外です',
-            'break_end_time.after' => '休憩時間が勤務時間外です',
-            'break_end_time.before' => '休憩時間が勤務時間外です',
+            'break_times.*.start_time.before' => '休憩開始時間が不適切です。',
+            'break_times.*.end_time.after' => '休憩終了時間が開始時間より前になっています。',
+            'break_times.*.end_time.before' => '休憩終了時間が退勤時間より遅くなっています。',
             'remarks.required' => "備考を記入してください"
         ];
     }

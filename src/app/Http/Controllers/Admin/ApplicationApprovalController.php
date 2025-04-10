@@ -2,36 +2,31 @@
 
 namespace App\Http\Controllers\Admin;
 
-/*use App\Http\Controllers\Controller;*/
+
 use App\Http\Controllers\AdminBaseController;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\Adjust;
-/*use Illuminate\Support\Facades\Auth;*/
 
 
 class ApplicationApprovalController extends AdminBaseController
 {
-    public function approval(Request $request,$id){
+    public function approval(Request $request, $id)
+{
 
-        // リダイレクト処理を呼び出し
     $redirect = $this->handleRedirects($request);
     if ($redirect) {
         return $redirect;
     }
 
-        $attendance = Attendance::with('user')->findOrFail($id);
+    // 修正後：受け取った $id を使用
+    $adjust = Adjust::with(['breakTimes', 'user', 'attendance.user'])->findOrFail($id);
+    $attendance = $adjust->attendance;
 
-        // `break_times` が null または空文字の場合、デフォルト値を設定
-        if (empty($attendance->break_times)) {
-            $attendance->break_times = json_encode([]);
-        }
+    $hasPendingApproval = in_array($adjust->status, ['approved', 'pending']);
 
-        // 修正申請があるか確認
-        $adjust = Adjust::where('attendance_id', $id)->first();
-
-        return view('admin.application_approval', compact('attendance', 'adjust'));
-    }
+    return view('admin.application_approval', compact('attendance', 'adjust', 'hasPendingApproval'));
+}
 
     public function approve($id)
     {
@@ -46,7 +41,8 @@ class ApplicationApprovalController extends AdminBaseController
         $adjust->status = 'approved';
         $adjust->save();
 
-        return redirect()->back()->with('message', '申請を承認しました。');
+        return redirect()->route('admin.application_request')->with('message', '申請を承認しました。');
+
     }
 }
 
