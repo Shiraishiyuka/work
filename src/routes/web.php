@@ -65,7 +65,7 @@ Route::post('/admin/login', [AdminLoginController::class, 'authenticate'])->name
 Route::middleware(['auth', 'verified'])->group(function () {
     
 
-    // 管理者の勤怠一覧ページは GET のみにする
+
     Route::match(['get', 'post'], '/admin/attendance/list/{year?}/{month?}', [AdminListController::class, 'admin_list'])
         ->name('admin.attendance.list');
 
@@ -76,7 +76,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ->name('by_staff.csv');
 
     //申請一覧
-    Route::get('/stamp_correction_request/list', [ApplicationRequestController::class, 'application_request'])->name('admin.application_request');
+    Route::get('stamp_correction_request/list', [ApplicationRequestController::class, 'application_request'])
+    ->name('admin.correction_request'); // 
 
     //ルート修正
     Route::match(['get', 'post'], '/attendancedetaillist/{id}', [AdminAttendanceController::class, 'admin_attendance'])->name('admin_attendance');

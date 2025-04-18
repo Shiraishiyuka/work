@@ -106,7 +106,7 @@ class RegisterTest extends TestCase
     /** メールアドレスの重複チェックメッセージ */
     public function test_email_unique_message()
     {
-        // 事前に同じメールのユーザー作成
+
         User::create([
             'name' => '既存ユーザー',
             'email' => 'test@example.com',
@@ -133,13 +133,13 @@ class RegisterTest extends TestCase
         'password_confirmation' => 'password123',
     ]);
 
-    // データベースに保存されているか確認
+
     $this->assertDatabaseHas('users', [
         'email' => 'saved_user@example.com',
         'name' => '新しいユーザー',
     ]);
 
-    // リダイレクト確認（例：ログイン画面へ）
-    $response->assertRedirect('/login'); // あなたの仕様に合わせて調整
+
+    $response->assertRedirect('/login');
 }
 }

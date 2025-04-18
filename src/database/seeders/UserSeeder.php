@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash; // ← これを追加！
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class UserSeeder extends Seeder
@@ -16,12 +16,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // 🚨 外部キー制約を一時的に無効化
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('users')->truncate(); // 🔥 全データ削除
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;'); // ✅ 外部キー制約を再有効化
 
-        // ユーザーデータを作成
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('users')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+
         $users = [
             [
                 'name' => '西怜奈',
@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
             ],
         ];
 
-        // データを挿入
+
         User::insert($users);
     }
     

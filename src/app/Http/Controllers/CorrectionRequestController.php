@@ -20,11 +20,12 @@ class CorrectionRequestController extends AdminBaseController
 
         $status = $request->query('status', 'pending');
 
-
-        $adjustments = Adjust::where('user_id', Auth::id())
-            ->where('status', $status)
-            ->orderBy('created_at', 'desc')
-            ->get();
+$adjustments = Adjust::where('user_id', Auth::id())
+    ->where('status', $status)
+    ->orderBy('attendance_id')
+    ->latest()
+    ->get()
+    ->unique('attendance_id');
 
         return view('correctionrequest', compact('adjustments', 'status'));
     }

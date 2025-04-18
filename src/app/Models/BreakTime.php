@@ -25,4 +25,9 @@ class BreakTime extends Model
     {
         return $this->belongsTo(Adjust::class);
     }
+
+    protected $casts = [
+    'start_time' => 'datetime',
+    'end_time' => 'datetime',
+];
 }

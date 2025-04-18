@@ -18,34 +18,33 @@ class ApplicationRequestController extends AdminBaseController
         return $redirect;
     }
 
+    $year = $year ?? Carbon::now()->year;
+    $month = $month ?? Carbon::now()->month;
+    $status = $request->query('status');
 
-        $year = $year ?? Carbon::now()->year;
-        $month = $month ?? Carbon::now()->month;
+    $currentDate = Carbon::createFromDate($year, $month, 1);
+    $previousMonth = $currentDate->copy()->subMonth();
+    $nextMonth = $currentDate->copy()->addMonth();
 
 
-        $currentDate = Carbon::createFromDate($year, $month, 1);
+    $adjustments = Adjust::with('user')
+        ->whereYear('created_at', $year)
+        ->whereMonth('created_at', $month)
+        ->when($status, function ($query, $status) {
+            return $query->where('status', $status);
+        })
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        // **前月・次月の計算**
-        $previousMonth = $currentDate->copy()->subMonth();
-        $nextMonth = $currentDate->copy()->addMonth();
-
-        // **指定された年月の申請データを取得**
-        $adjustments = Adjust::with('user')
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('admin.correction_request', [
-            'adjustments' => $adjustments,
-            'currentDate' => $currentDate,
-            'previousYear' => $previousMonth->year,
-            'previousMonth' => $previousMonth->month,
-            'nextYear' => $nextMonth->year,
-            'nextMonth' => $nextMonth->month
-        ]);
-
-    }
-
+    return view('admin.correction_request', [
+        'adjustments' => $adjustments,
+        'currentDate' => $currentDate,
+        'previousYear' => $previousMonth->year,
+        'previousMonth' => $previousMonth->month,
+        'nextYear' => $nextMonth->year,
+        'nextMonth' => $nextMonth->month,
+        'status' => $status
+    ]);
     
+}
 }

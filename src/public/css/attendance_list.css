@@ -68,7 +68,7 @@
     text-decoration: none;
 }
 
-/*.previous-day,.next-day*/
+
 .previous-month,
 .later-month
 {
@@ -120,7 +120,7 @@
 
 
 
-/* プルダウンメニューを非表示にする */
+
 .calendar-popup {
     display: none;
     position: fixed;
@@ -137,7 +137,7 @@
     text-align: center;
 }
 
-/* 🔹 クリックでプルダウンを表示 */
+
 :target {
     display: block;
 }
@@ -152,14 +152,7 @@
     font-weight: bold;
 }
 
-/* プルダウンのデザイン */
-/*
-select {
-    padding: 5px;
-    margin: 5px;
-    font-size: 16px;
-}
-*/
+
 
 .attendance {
     width: 100%;
@@ -169,11 +162,7 @@ select {
     margin-top: 3rem;
 }
 
-/*.with-top-border {
-    border-top: 1px solid #ccc;
-    padding: 0.5rem;
-}
-*/
+
 
 .attendance-record tr+tr {
     border-top: 1px solid #ccc;
@@ -181,12 +170,10 @@ select {
 .attendance-record th,
 .attendance-record td {
     width: 16.6%;
-    /* 100% ÷ 6列 */
     text-align: center;
     padding: 10px;
     vertical-align: middle;
     font-size: 16px;
-    /* 必要なら調整 */
 }
 
 .attendance-record {
@@ -197,23 +184,17 @@ select {
 
 .attendance-record td {
     white-space: nowrap;
-    /* 折り返さず横スクロールにする */
     overflow: hidden;
     text-overflow: ellipsis;
-    /* 長すぎる場合は...に */
 }
 
-/* 詳細リンクのデフォルトスタイルを削除 */
 .attendance-record a {
     color: inherit;
-    /* 親要素の文字色を継承 */
     text-decoration: none;
-    /* 下線を消す */
     font-weight: normal;
-    /* 必要に応じてフォントウェイト調整 */
 }
 
-/* クリック後（visited）やホバー時の色も継承させる */
+
 .attendance-record a:visited,
 .attendance-record a:hover,
 .attendance-record a:active {

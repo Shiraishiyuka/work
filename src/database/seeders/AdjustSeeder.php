@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Models\Adjust;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class AdjustSeeder extends Seeder
@@ -18,28 +19,23 @@ class AdjustSeeder extends Seeder
      */
     public function run()
     {
-        // 既存の User を取得
-        $user = User::first(); // 一番最初のユーザーを取得（例）
-        $attendance = Attendance::first(); // 一番最初の勤怠データを取得
+        $attendances = Attendance::take(10)->get();
 
-        // `User` や `Attendance` が存在しない場合は作成
-        if (!$user) {
-            $user = User::factory()->create();
-        }
-        if (!$attendance) {
-            $attendance = Attendance::factory()->create(['user_id' => $user->id]);
-        }
+        foreach ($attendances as $attendance) {
+            $newStart = Carbon::parse($attendance->start_time)->addMinutes(rand(-10, 10));
+            $newEnd = $attendance->end_time ? Carbon::parse($attendance->end_time)->addMinutes(rand(-10, 10)) : null;
 
-        // 修正データを作成
-        Adjust::create([
-            'attendance_id' => $attendance->id,
-            'user_id' => $user->id,  // ✅ 存在する user_id を使用
-            'date' => now()->subDays(3)->toDateString(),
-            'start_time' => '08:00:00',
-            'end_time' => '17:00:00',
-            'break_minutes' => 60,
-            'remarks' => '時間修正',
-            'status' => 'pending',
-        ]);
+            $adjust = Adjust::create([
+                'attendance_id' => $attendance->id,
+                'user_id' => $attendance->user_id,
+                'date' => $attendance->date,
+                'start_time' => $newStart,
+                'end_time' => $newEnd,
+                'remarks' => 'テスト用の修正申請です',
+                'status' => 'pending',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

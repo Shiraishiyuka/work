@@ -17,7 +17,7 @@ class AttendanceListTest extends TestCase
      *
      * @return void
      */
-    use RefreshDatabase;
+     use RefreshDatabase;
 
     protected $user;
     protected $today;
@@ -25,10 +25,10 @@ class AttendanceListTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->user = User::factory()->create();
         $this->today = Carbon::today();
 
-        // 勤怠データを3日分登録
         foreach (range(0, 2) as $i) {
             Attendance::create([
                 'user_id' => $this->user->id,
@@ -41,7 +41,7 @@ class AttendanceListTest extends TestCase
         }
     }
 
-    /** 勤怠一覧に自分のデータが全て表示される */
+
     public function test_attendance_list_displays_all_user_data()
     {
         $response = $this->actingAs($this->user)->get('/attendance_list');
@@ -51,16 +51,16 @@ class AttendanceListTest extends TestCase
         $response->assertSee('18:00');
     }
 
-    /** 現在の月が表示されている */
+
     public function test_current_month_is_displayed()
     {
         $response = $this->actingAs($this->user)->get('/attendance_list');
 
-        $expectedMonth = $this->today->format('n'); // 3月など
+        $expectedMonth = $this->today->format('n');
         $response->assertSee("{$expectedMonth}月");
     }
 
-    /** 「前月」ボタンで前月のデータが見られる */
+
     public function test_previous_month_data_can_be_viewed()
     {
         $lastMonth = $this->today->copy()->subMonth();
@@ -70,17 +70,17 @@ class AttendanceListTest extends TestCase
         $response->assertSee("{$lastMonth->month}月");
     }
 
-    /** 「詳細」ボタンから詳細画面に遷移する */
+
     public function test_detail_button_navigates_to_detail_page()
     {
         $attendance = Attendance::first();
         $response = $this->actingAs($this->user)->get("/attendancedetail/{$attendance->id}");
 
         $response->assertStatus(200);
-        $response->assertSee('出勤'); // 出勤・退勤ラベルなど
+        $response->assertSee('出勤');
     }
 
-    /** 詳細画面：名前が表示されている */
+
     public function test_detail_page_displays_user_name()
     {
         $attendance = Attendance::first();
@@ -89,16 +89,17 @@ class AttendanceListTest extends TestCase
         $response->assertSee($this->user->name);
     }
 
-    /** 詳細画面：日付が表示されている */
+
     public function test_detail_page_displays_correct_date()
     {
         $attendance = Attendance::first();
+        $expectedDate = $attendance->date->format('Y年 m月d日');
         $response = $this->actingAs($this->user)->get("/attendancedetail/{$attendance->id}");
 
-        $response->assertSee($attendance->date->format('Y-m-d'));
+        $response->assertSee($expectedDate);
     }
 
-    /** 詳細画面：出勤・退勤時間が一致している */
+
     public function test_detail_page_displays_correct_start_end_time()
     {
         $attendance = Attendance::first();
@@ -108,12 +109,21 @@ class AttendanceListTest extends TestCase
         $response->assertSee('18:00');
     }
 
-    /** 詳細画面：休憩時間が表示されている */
-    public function test_detail_page_displays_break_time()
-    {
-        $attendance = Attendance::first();
-        $response = $this->actingAs($this->user)->get("/attendancedetail/{$attendance->id}");
 
-        $response->assertSee('1時間0分');
-    }
+    public function test_detail_page_displays_break_time()
+{
+    $attendance = Attendance::first();
+
+
+    $attendance->breakTimes()->create([
+        'start_time' => '12:00:00',
+        'end_time'   => '13:00:00',
+    ]);
+
+    $expected = '1時間0分';
+
+    $response = $this->actingAs($this->user)->get("/attendancedetail/{$attendance->id}");
+    $response->assertSee($expected);
+}
+
 }

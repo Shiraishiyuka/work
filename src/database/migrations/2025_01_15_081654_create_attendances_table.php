@@ -17,12 +17,10 @@ class CreateAttendancesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->date('date');
-            $table->time('start_time');
-            $table->time('end_time')->nullable();
-            /*$table->time('break_end_time')->nullable();    // 休憩終了時間*/
-            /*$table->time('break_start_time')->nullable();  // 休憩開始時間*/
-            $table->integer('break_minutes')->default(0); // 休憩の合計時間（分単位）
-            $table->integer('work_minutes')->default(0);  // 勤務の合計時間（分単位）
+            $table->dateTime('start_time');
+            $table->dateTime('end_time')->nullable();
+            $table->integer('break_minutes')->default(0);
+            $table->integer('work_minutes')->default(0);
             $table->text('remarks')->nullable();
             $table->string('status', 255)->default('pending');
             $table->timestamps();

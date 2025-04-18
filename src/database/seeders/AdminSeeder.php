@@ -13,14 +13,17 @@ class AdminSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-        User::updateOrCreate([
-            'email' => env('ADMIN_EMAIL', 'admin@example.com'),
-        ], [
-            'name' => env('ADMIN_NAME', 'Admin User'),
-            'password' => Hash::make(env('ADMIN_PASSWORD', 'password123')),
-            'is_admin' => true,
-        ]);
-    }
+
+     public function run()
+{
+    \App\Models\User::where('email', 'admin@example.com')->delete();
+
+    \App\Models\User::create([
+        'name' => env('ADMIN_NAME', 'Admin User'),
+        'email' => env('ADMIN_EMAIL', 'admin@example.com'),
+        'password' => Hash::make(env('ADMIN_PASSWORD', 'password123')),
+        'is_admin' => true,
+    ]);
+}
+
 }

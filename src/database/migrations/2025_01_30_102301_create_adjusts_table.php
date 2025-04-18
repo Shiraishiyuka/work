@@ -18,8 +18,8 @@ class CreateAdjustsTable extends Migration
             $table->unsignedBigInteger('attendance_id'); 
             $table->unsignedBigInteger('user_id');
             $table->date('date')->nullable();
-            $table->time('start_time')->nullable();
-            $table->time('end_time')->nullable();
+            $table->dateTime('start_time')->nullable();
+            $table->dateTime('end_time')->nullable();
             $table->integer('break_minutes')->default(0);
             $table->integer('work_minutes')->default(0);
             $table->text('remarks')->nullable();

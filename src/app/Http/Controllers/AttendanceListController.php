@@ -21,11 +21,11 @@ class AttendanceListController extends BaseController
 
         $currentDate = Carbon::createFromDate($year, $month, 1);
 
-        // **前月・次月を計算**
+
         $previousDate = $currentDate->copy()->subMonth();
         $nextDate = $currentDate->copy()->addMonth();
 
-        // **指定した月の勤怠データを取得**
+
         $attendances = Attendance::where('user_id', Auth::id())
             ->whereYear('date', $year)
             ->whereMonth('date', $month)

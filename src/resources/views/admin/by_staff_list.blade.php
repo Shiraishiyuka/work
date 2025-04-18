@@ -74,13 +74,22 @@
             </tr>
             @foreach ($attendances as $attendance)
             <tr>
-                <td>{{ $attendance->date }}</td>
-                <td>{{ $attendance->start_time }}</td>
-                <td>{{ $attendance->end_time ?? '-' }}</td>
-                <td>{{ floor($attendance->break_minutes / 60) }}時間{{ $attendance->break_minutes % 60 }}分</td>
-                <td>{{ floor($attendance->work_minutes / 60) }}時間{{ $attendance->work_minutes % 60 }}分</td>
-                <td><a href="{{ route('admin', ['id' => $attendance->id]) }}">詳細</a></td>
-            </tr>
+    <td>{{ \Carbon\Carbon::parse($attendance->date)->format('m/d') }}</td>
+
+    <td>
+        {{ $attendance->start_time ? \Carbon\Carbon::parse($attendance->start_time)->format('H:i') : '-' }}
+    </td>
+
+    <td>
+        {{ $attendance->end_time ? \Carbon\Carbon::parse($attendance->end_time)->format('H:i') : '-' }}
+    </td>
+
+    <td>{{ floor($attendance->break_minutes / 60) }}時間{{ $attendance->break_minutes % 60 }}分</td>
+
+    <td>{{ floor($attendance->work_minutes / 60) }}時間{{ $attendance->work_minutes % 60 }}分</td>
+
+    <td><a href="{{ route('admin.application_request', ['id' => $attendance->id]) }}">詳細</a></td>
+</tr>
             @endforeach
         </table>
     </div>

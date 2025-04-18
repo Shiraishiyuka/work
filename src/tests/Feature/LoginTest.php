@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *
@@ -19,7 +20,7 @@ class LoginTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware(); // CSRF無効化
+        /*$this->withoutMiddleware();*/ // セッション必要なのでミドルウェアとおす
     }
 
     /** メールアドレス未入力のテスト */
@@ -30,7 +31,7 @@ class LoginTest extends TestCase
         ]);
 
         $errors = session('errors');
-        $this->assertEquals('メールアドレスを入力してください', $errors->first('email'));
+        $this->assertEquals('メールアドレスを入力してください。', $errors->first('email'));
     }
 
     /** パスワード未入力のテスト */
@@ -59,7 +60,9 @@ class LoginTest extends TestCase
     /** 正しいユーザー情報でログイン成功するかのテスト */
     public function test_login_succeeds_with_valid_credentials()
     {
-        // 事前にユーザー作成（RegisterTestと同じ情報）
+        // すでに同じメールアドレスのユーザーが存在しないように削除
+        User::where('email', 'test@example.com')->delete();
+        
         User::create([
             'name' => 'テスト太郎_' . uniqid(),
             'email' => 'test@example.com',
@@ -83,7 +86,7 @@ class LoginTest extends TestCase
         ]);
 
         $errors = session('errors');
-        $this->assertEquals('メールアドレスを入力してください', $errors->first('email'));
+        $this->assertEquals('メールアドレスを入力してください。', $errors->first('email'));
     }
 
     /** 管理者ログイン：失敗系テスト（パスワードなし） */
@@ -112,6 +115,9 @@ class LoginTest extends TestCase
     /** 管理者ログイン：成功する場合 */
     public function test_admin_login_succeeds_with_valid_credentials()
     {
+
+        User::where('email', 'test@example.com')->delete();
+
         User::create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',

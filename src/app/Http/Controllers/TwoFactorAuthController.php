@@ -27,7 +27,7 @@ class TwoFactorAuthController extends Controller
     {
         $token = $request->query('token');
 
-        // トークンが一致すれば認証成功
+
         if ($token === Session::get('two_factor_token')) {
             Session::put('two_factor_authenticated', true);
             return redirect()->route('attendance.show');

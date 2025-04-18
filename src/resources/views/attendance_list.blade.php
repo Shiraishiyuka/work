@@ -59,7 +59,7 @@
         <button type="submit">表示</button>
     </form>
 
-    <a href="#" class="close-button">×</a>  <!-- 🔹 閉じるボタン -->
+    <a href="#" class="close-button">×</a>
 </div>
 
 <!-- 次月ボタン -->
@@ -83,26 +83,30 @@
             <th>合計</th>
             <th>詳細</th>
         </tr>
-        @foreach ($attendances as $attendance)
-    <tr></tr>
-    <tr>
-        <td>{{ \Carbon\Carbon::parse($attendance->date)->translatedFormat('m/d（D）') }}</td>
-        <td>{{ $attendance->start_time ? \Carbon\Carbon::parse($attendance->start_time)->format('H:i') : '-' }}</td>
-        <td>{{ $attendance->end_time ? \Carbon\Carbon::parse($attendance->end_time)->format('H:i') : '-' }}</td>
-        <td>
-            {{ sprintf('%02d:%02d', floor($attendance->calculated_break_minutes / 60), $attendance->calculated_break_minutes % 60) }}
-        </td>
-        <td>
-            {{ sprintf('%02d:%02d', floor(($attendance->work_minutes ?? 0) / 60), ($attendance->work_minutes ?? 0) % 60) }}
-        </td>
-        <td>
-            @if (!empty($attendance->id))
-                <a href="{{ route('attendancedetail', ['id' => $attendance->id]) }}">詳細</a>
-            @else
-                <span>詳細なし</span>
-            @endif
-        </td>
-    </tr>
+
+@foreach ($attendances as $attendance)
+<tr>
+    <td>{{ \Carbon\Carbon::parse($attendance->date)->translatedFormat('m/d（D）') }}</td>
+    <td>
+        {{ $attendance->start_time ? \Carbon\Carbon::parse($attendance->start_time)->format('H:i') : '-' }}
+    </td>
+    <td>
+        {{ $attendance->end_time ? \Carbon\Carbon::parse($attendance->end_time)->format('H:i') : '-' }}
+    </td>
+    <td>
+        {{ sprintf('%02d:%02d', floor(($attendance->break_minutes ?? 0) / 60), ($attendance->break_minutes ?? 0) % 60) }}
+    </td>
+    <td>
+        {{ sprintf('%02d:%02d', floor(($attendance->work_minutes ?? 0) / 60), ($attendance->work_minutes ?? 0) % 60) }}
+    </td>
+    <td>
+        @if (!empty($attendance->id))
+            <a href="{{ route('attendancedetail', ['id' => $attendance->id]) }}">詳細</a>
+        @else
+            <span>詳細なし</span>
+        @endif
+    </td>
+</tr>
 @endforeach
     </table>
 </div>

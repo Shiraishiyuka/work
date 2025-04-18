@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Attendance;
 use Carbon\Carbon;
 
 class AttendanceStatusTest extends TestCase
@@ -17,49 +18,40 @@ class AttendanceStatusTest extends TestCase
      */
     use RefreshDatabase;
 
-    public function test_attendance_screen_displays_current_datetime()
+     public function test_attendance_screen_displays_current_datetime()
     {
-        // ユーザー作成とログイン
         $user = User::factory()->create();
-
-        // 現在の時刻を取得（テスト時点の基準）
         $now = Carbon::now();
 
-        // ログイン状態で出勤画面を表示
         $response = $this->actingAs($user)->get('/attendance');
 
-        // 表示されている日付を確認（例：2025年03月27日（木））
-        $expectedDate = $now->translatedFormat('Y年m月d日（D）');
-        $response->assertSee($expectedDate);
-
-        // 表示されている時刻を確認（例：12:34）
-        $expectedTime = $now->format('H:i');
-        $response->assertSee($expectedTime);
+        $response->assertSee($now->translatedFormat('Y年m月d日（D）'));
+        $response->assertSee($now->format('H:i'));
     }
 
-     protected function setUp(): void
-    {
-        parent::setUp();
-        $this->withoutMiddleware(); // CSRFチェックを無効化
-    }
 
-    /** 勤務外ステータスが表示されるか確認 */
     public function test_status_displays_not_working()
     {
         $user = User::factory()->create();
 
-        // 勤務外としてセッションにセットしてアクセス
-        $response = $this->actingAs($user)
-                         ->withSession(['attendance_status' => 'not_working'])
-                         ->get('/attendance');
+
+        $response = $this->actingAs($user)->get('/attendance');
 
         $response->assertSee('勤務外');
     }
 
-    /** 勤務中ステータスが表示されるか確認 */
+
+
     public function test_status_displays_working()
     {
         $user = User::factory()->create();
+
+        Attendance::create([
+            'user_id' => $user->id,
+            'date' => now()->toDateString(),
+            'start_time' => now()->subHours(2)->format('H:i:s'),
+            'end_time' => null,
+        ]);
 
         $response = $this->actingAs($user)
                          ->withSession(['attendance_status' => 'working'])
@@ -68,27 +60,43 @@ class AttendanceStatusTest extends TestCase
         $response->assertSee('出勤中');
     }
 
-    /** 休憩中ステータスが表示されるか確認 */
     public function test_status_displays_on_break()
-    {
-        $user = User::factory()->create();
+{
+    $user = \App\Models\User::factory()->create();
 
-        $response = $this->actingAs($user)
-                         ->withSession(['attendance_status' => 'on_break'])
-                         ->get('/attendance');
 
-        $response->assertSee('休憩中');
-    }
+    $attendance = \App\Models\Attendance::create([
+        'user_id' => $user->id,
+        'date' => now()->toDateString(),
+        'start_time' => now()->subHours(2)->format('H:i:s'),
+        'end_time' => null,
+    ]);
 
-    /** 退勤済ステータスが表示されるか確認 */
-    public function test_status_displays_finished()
-    {
-        $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-                         ->withSession(['attendance_status' => 'finished'])
-                         ->get('/attendance');
+    $response = $this->actingAs($user)
+                     ->withSession(['attendance_status' => 'on_break'])
+                     ->get('/attendance');
 
-        $response->assertSee('退勤済');
-    }
+    $response->assertSee('休憩中');
+}
+
+public function test_status_displays_finished()
+{
+    $user = \App\Models\User::factory()->create();
+
+
+    $attendance = \App\Models\Attendance::create([
+        'user_id' => $user->id,
+        'date' => now()->toDateString(),
+        'start_time' => now()->subHours(8)->format('H:i:s'),
+        'end_time' => now()->format('H:i:s'),
+    ]);
+
+    $response = $this->actingAs($user)
+                     ->withSession(['attendance_status' => 'finished'])
+                     ->get('/attendance');
+
+    $response->assertSee('退勤済');
+}
+
 }

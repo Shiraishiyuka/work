@@ -35,10 +35,7 @@
     color: #000000;
 }
 
-/*.update-form {
-    width: 100%;
-    height: 200px;
-}*/
+
 
 .attendance-detail_data-table th,
 .attendance-detail_data-table td {
@@ -47,12 +44,12 @@
     vertical-align: middle;
 }
 
-/* 行ごとに線を入れる → 最後の行には線を入れない */
+
 .attendance-detail_data-table tr {
     border-bottom: 1px solid #ccc;
 }
 
-/* 最後の行の線を非表示 */
+
 .attendance-detail_data-table tr:last-child {
     border-bottom: none;
 }
@@ -116,17 +113,13 @@
 .attendance-detail_form-group {
     display: flex;
     flex-direction: column;
-    /* 🔹 縦方向に要素を並べる */
     align-items: flex-start;
-    /* 🔹 左寄せにする */
     position: relative;
-    /* 🔹 エラーメッセージを適切に配置 */
 }
 
 .form_error {
     color: red;
     font-size: 12px;
-    /* 🔹 入力欄のすぐ下に配置 */
 }
 
 
@@ -153,35 +146,17 @@
         border-radius: 0.1875rem;
 }
 
-/*
-.export-button {
-    width: 100%;
-    text-align: right;
-    margin: 2rem;
-}
 
-.csv-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #000000;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-}
-    */
 
 p {
     width: 100%;
 }
 
 
-/* 出勤時間と退勤時間の間に「〜」を表示 */
 .attendance-detail_time {
     display: flex;
     align-items: center;
     gap: 10px;
-    /* 間隔を調整 */
 }
 
 .attendance-detail_time span {
@@ -194,7 +169,6 @@ p {
 
 .attendance-detail_row:last-child {
     border-bottom: none;
-    /* 最後の行には線をつけない */
 }
 
 .attendance-detail_row {
@@ -210,11 +184,10 @@ p {
 
 
 
-/* 承認待ちメッセージを右揃えにする */
+
 .button-text {
     text-align: right;
     display: block;
-    /* インライン要素ではなくブロック要素にする */
     width: 100%;
 }
 
@@ -222,7 +195,6 @@ p {
 
 .attendance-detail_row .attendance-detail_form-text {
     flex: 2;
-    /* 名前と日付のフィールドの幅を統一 */
 }
 
 
@@ -232,7 +204,7 @@ p {
     border-bottom: none;
 }
 
-/* 各テキストと入力フォームのエリアを柔軟に調整 */
+
 .attendance-detail_text {
     flex: 1;
     min-width: 120px;

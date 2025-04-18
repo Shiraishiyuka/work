@@ -20,17 +20,17 @@ class AdminListController extends AdminBaseController
             return $redirect;
         }
 
-        // クエリパラメータから `date` を取得し、なければ今日の日付を設定
+
         $date = $request->query('date', Carbon::today()->toDateString());
 
-        // Carbon インスタンスに変換
+
         $currentDate = Carbon::parse($date);
 
-        // **前日・翌日を計算**
+
         $previousDate = $currentDate->copy()->subDay()->toDateString();
         $nextDate = $currentDate->copy()->addDay()->toDateString();
 
-        // **この日付の勤怠データのみ取得**
+        
         $attendances = Attendance::with('user') 
             ->whereDate('date', $currentDate) // 
             ->orderBy('start_time', 'asc')

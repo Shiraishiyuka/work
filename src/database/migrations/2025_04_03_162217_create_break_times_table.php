@@ -17,8 +17,8 @@ class CreateBreakTimesTable extends Migration
     $table->id();
     $table->unsignedBigInteger('attendance_id')->nullable();
     $table->unsignedBigInteger('adjust_id')->nullable();
-    $table->time('start_time');
-    $table->time('end_time')->nullable();
+    $table->dateTime('start_time')->nullable();
+    $table->dateTime('end_time')->nullable();
     $table->timestamps();
     $table->foreign('attendance_id')->references('id')->on('attendances')->onDelete('cascade');
     $table->foreign('adjust_id')->references('id')->on('adjusts')->onDelete('cascade');

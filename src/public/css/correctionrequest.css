@@ -1,21 +1,17 @@
 .correction_screen {
     width: 100%;
     min-height: 100vh;
-    /* 画面全体の高さを確保 */
     background-color: #ececef;
-    /* ヘッダーの高さ分だけ余白を追加（適宜調整） */
 }
 
 .correction_screen_inner {
     width: 60%;
     min-height: calc(100vh - 80px);
-    /* ヘッダーの高さを引いた分の最小高さ */
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    /* コンテンツを上に寄せる */
 }
 
 
@@ -70,7 +66,6 @@
     overflow-y: auto;
     border: 1px solid #ddd;
     margin-top: 20px;
-    /* ヘッダーとテーブルの間に余白を追加 */
 }
 
 
@@ -119,7 +114,7 @@
 }
 
 /* ボタンの間隔調整 */
-/*.next-month*/
+
 .previous-month
  {
     display: flex;
@@ -172,7 +167,6 @@ td {
 
 .petition-table td {
     border-top: 1.5px solid #ccc;
-    /* 🔹 上に線を引く */
     padding: 8px;
 }
 

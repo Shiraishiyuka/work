@@ -14,7 +14,7 @@
     <div class="attendance-detail_screen_inner">
         <div class="title-space">
             <div class="title-line"></div>
-            <span class="title-text">勤怠詳細5</span>
+            <span class="title-text">勤怠詳細</span>
         </div>
 
         <div class="attendance-detail_table">

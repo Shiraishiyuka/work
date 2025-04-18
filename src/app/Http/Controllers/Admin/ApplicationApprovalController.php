@@ -19,7 +19,7 @@ class ApplicationApprovalController extends AdminBaseController
         return $redirect;
     }
 
-    // 修正後：受け取った $id を使用
+
     $adjust = Adjust::with(['breakTimes', 'user', 'attendance.user'])->findOrFail($id);
     $attendance = $adjust->attendance;
 
@@ -29,20 +29,25 @@ class ApplicationApprovalController extends AdminBaseController
 }
 
     public function approve($id)
-    {
-        $adjust = Adjust::where('attendance_id', $id)->firstOrFail();
+{
+    $adjust = Adjust::where('attendance_id', $id)->where('status', 'pending')->firstOrFail();
 
-        // すでに承認済みなら処理しない
-        if ($adjust->status === 'approved') {
-            return redirect()->back()->with('message', '既に承認済みです。');
-        }
 
-        // ステータスを `approved` に更新
-        $adjust->status = 'approved';
-        $adjust->save();
-
-        return redirect()->route('admin.application_request')->with('message', '申請を承認しました。');
-
+    if ($adjust->status === 'approved') {
+        return redirect()->back()->with('message', '既に承認済みです。');
     }
+
+
+    $adjust->status = 'approved';
+    $adjust->save();
+
+
+    Adjust::where('attendance_id', $adjust->attendance_id)
+        ->where('id', '!=', $adjust->id)
+        ->where('status', 'pending')
+        ->delete();
+
+    return redirect()->route('admin.correction_request')->with('message', '申請を承認しました。');
+}
 }
 

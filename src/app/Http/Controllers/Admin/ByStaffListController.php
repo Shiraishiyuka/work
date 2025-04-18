@@ -26,18 +26,18 @@ class ByStaffListController extends BaseController
 
     $user = User::findOrFail($id);
 
-    // URLの `year` と `month` のパラメータを取得し、デフォルトを設定
+
         $year = $request->query('year', $year ?? Carbon::today()->year);
         $month = $request->query('month', $month ?? Carbon::today()->month);
 
-        // **Carbon インスタンスに変換**
+
         $currentDate = Carbon::createFromDate($year, $month, 1);
 
-        // **前月・次月を計算**
+
         $previousDate = $currentDate->copy()->subMonth();
         $nextDate = $currentDate->copy()->addMonth();
 
-    // そのユーザーの勤怠データのみを取得
+
     $attendances = Attendance::where('user_id', $id)
             ->whereYear('date', $year)
             ->whereMonth('date', $month)
@@ -62,17 +62,17 @@ class ByStaffListController extends BaseController
 
     $user = User::findOrFail($id);
 
-    // 指定された月の勤怠データを取得
+
     $attendances = Attendance::where('user_id', $id)
         ->whereYear('date', $year)
         ->whereMonth('date', $month)
         ->orderBy('date', 'asc')
         ->get();
 
-    // CSVのヘッダー
+
     $csvHeader = ["日付", "出勤", "退勤", "休憩時間", "勤務時間"];
 
-    // CSVデータを作成
+
     $csvData = [];
     foreach ($attendances as $attendance) {
         $csvData[] = [
@@ -84,10 +84,10 @@ class ByStaffListController extends BaseController
         ];
     }
 
-    // CSVファイル名
+
     $fileName = "{$user->name}_{$year}_{$month}_勤怠.csv";
 
-    // レスポンスでCSVを返す
+
     $handle = fopen('php://temp', 'r+');
     fputcsv($handle, $csvHeader);
     foreach ($csvData as $row) {

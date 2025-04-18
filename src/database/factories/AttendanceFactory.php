@@ -19,12 +19,10 @@ class AttendanceFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory(), // 関連ユーザーも自動生成
+            'user_id' => User::factory(),
             'date' => Carbon::today()->format('Y-m-d'),
             'start_time' => '09:00:00',
             'end_time' => '18:00:00',
-            'break_start_time' => '12:00:00',
-            'break_end_time' => '13:00:00',
             'break_minutes' => 60,
             'work_minutes' => 480,
             'created_at' => now(),

@@ -22,6 +22,12 @@ class Attendance extends Model
     'status',
 ];
 
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+        'date' => 'date',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -81,4 +87,7 @@ public function getCalculatedBreakMinutesAttribute()
             return $carry + $start->diffInMinutes($end);
         }, 0);
 }
+
+
+
 }

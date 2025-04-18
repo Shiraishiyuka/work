@@ -40,6 +40,6 @@ class Adjust extends Model
 
 public function breakTimes()
 {
-    return $this->hasMany(\App\Models\BreakTime::class, 'adjust_id');
+    return $this->hasMany(BreakTime::class, 'adjust_id', 'id');
 }
 }
